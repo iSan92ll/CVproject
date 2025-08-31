@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de CVs</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Formulario de CV</h1>
+    <form id="cvForm">
+        <input type="hidden" id="cvId">
+        <input type="text" id="nombre" placeholder="Nombre completo" required>
+        <input type="email" id="email" placeholder="Correo electrónico" required>
+        <input type="text" id="telefono" placeholder="Teléfono" required>
+        <input type="text" id="ciudad" placeholder="Ciudad" required>
+        <input type="text" id="habilidades" placeholder="Habilidades (separadas por coma)" required>
+        <button type="submit" id="btnguardar">Guardar</button>
+        <button type="button" id="btncancelar" style="display:none;">Cancelar</button>
+    </form>
+
+    <h2>Lista de CVs</h2>
+    <table border="1" id="cvTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Ciudad</th>
+                <th>Habilidades</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="listaCVs"></tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>
