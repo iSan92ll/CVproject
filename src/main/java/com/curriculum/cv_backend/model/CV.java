@@ -1,9 +1,9 @@
 package com.curriculum.cv_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import java.util.List;
 
 @Entity
 @Table(name = "cv")
@@ -19,15 +19,17 @@ public class CV {
     @Email(message = "Correo inválido")
     private String email;
 
-    @Pattern(regexp = "\\d{7,15}", message = "Teléfono inválido")
+    @Pattern(regexp = "\\d{10}", message = "Teléfono inválido")
     private String telefono;
 
     @NotBlank(message = "La ciudad es obligatoria")
     private String ciudad;
 
-    @ElementCollection
-    @CollectionTable(name = "cv_habilidades", joinColumns = @JoinColumn(name = "cv_id"))
-    @Column(name = "habilidad")
-    private List<@NotBlank String> habilidades;
+    @NotBlank(message = "La dirección es obligatoria")
+    private String direccion;
+
+    @OneToOne(mappedBy = "cv", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private CVHabilidades habilidades;
 }
 
