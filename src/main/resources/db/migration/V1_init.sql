@@ -4,7 +4,16 @@ CREATE TABLE cv (
   email VARCHAR(255),
   telefono VARCHAR(50),
   ciudad VARCHAR(100),
-  direccion VARCHAR(255)
+  direccion VARCHAR(255),
+  genero VARCHAR(50),
+  tipoiden VARCHAR(100),
+  numeroiden VARCHAR(100),
+  fechanac DATE,
+  ocupacion VARCHAR(100),
+  puesto VARCHAR(100),
+  estadocivil VARCHAR(50),
+  nacionalidad VARCHAR(100),
+  objetivo VARCHAR(255)
 );
 
 CREATE TABLE cv_habilidades (

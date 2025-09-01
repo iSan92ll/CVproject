@@ -4,20 +4,56 @@
     <meta charset="UTF-8">
     <title>Gestión de CVs</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 </head>
 <body>
     <h1>Formulario de CV</h1>
     <form id="cvForm">
         <input type="hidden" id="cvId">
+        <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" placeholder="Nombre completo" required>
+        <label for="email">Email:</label>
         <input type="email" id="email" placeholder="Correo electrónico" required>
+        <label for="telefono">Teléfono:</label>
         <input type="text" id="telefono" placeholder="Teléfono" required>
-        <input type="text" id="ciudad" placeholder="Ciudad" required>
+        <label for="genero">Género:</label>
+        <select id="genero" name="generos" required>
+            <option value="" disabled selected>Seleccione su género</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Otro</option>
+        </select>
+        <label for="ciudad">Ciudad:</label>
+        <input list="ciudades" id="ciudad" placeholder="Escribe una ciudad...">
+        <datalist id="ciudades"></datalist>
+        <label for="direccion">Dirección:</label>
         <input type="text" id="direccion" placeholder="Dirección" required>
+        <label for="habilidad">Habilidades:</label>
         <input type="text" id="habilidad" placeholder="Habilidades" required>
+        <label for="experiencia">Experiencia:</label>
         <input type="text" id="experiencia" placeholder="Experiencia" required>
+        <label for="educacion">Educación:</label>
         <input type="text" id="educacion" placeholder="Educación" required>
+        <label for="idiomas">Idiomas:</label>
         <input type="text" id="idiomas" placeholder="Idiomas" required>
+        <label for="tipoiden">Tipo de Identificación:</label>
+        <input type="text" id="tipoiden" placeholder="Tipo de Identificación" required>
+        <label for="numeroiden">Número de Identificación:</label>
+        <input type="text" id="numeroiden" placeholder="Número de Identificación" required>
+        <label for="fechanac">Fecha de Nacimiento:</label>
+        <input type="date" id="fechanac" placeholder="Fecha de Nacimiento" required>
+        <label for="ocupacion">Ocupación:</label>
+        <input type="text" id="ocupacion" placeholder="Ocupación" required>
+        <label for="puesto">Puesto a aplicar:</label>
+        <input type="text" id="puesto" placeholder="Puesto a aplicar" required>
+        <label for="estadocivil">Estado Civil:</label>
+        <input type="text" id="estadocivil" placeholder="Estado Civil" required>
+        <label for="pais">Nacionalidad:</label>
+        <input list="paises" id="pais" placeholder="Escribe un país...">
+        <datalist id="paises"></datalist>
+        <label for="objetivo">Objetivo dentro de la empresa:</label>
+        <input type="text" id="objetivo" placeholder="Objetivo dentro de la empresa" required>
         <button type="submit" id="btnguardar">Guardar</button>
         <button type="button" id="btncancelar" style="display:none;">Cancelar</button>
     </form>
@@ -30,8 +66,17 @@
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Teléfono</th>
+                <th>Tipo de Identificación</th>
+                <th>Número de Identificación</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Genero</th>
+                <th>Estado Civil</th>
                 <th>Ciudad</th>
                 <th>Dirección</th>
+                <th>Ocupación</th>
+                <th>Puesto a aplicar</th>
+                <th>Nacionalidad</th>
+                <th>Objetivo dentro de la empresa</th>
                 <th>Habilidades</th>
                 <th>Experiencia</th>
                 <th>Educación</th>
@@ -42,6 +87,7 @@
         <tbody id="listaCVs"></tbody>
     </table>
 
+    <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

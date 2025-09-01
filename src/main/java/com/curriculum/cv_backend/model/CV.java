@@ -28,6 +28,33 @@ public class CV {
     @NotBlank(message = "La dirección es obligatoria")
     private String direccion;
 
+    @NotBlank(message = "El género es obligatorio")
+    private String genero;
+
+    @NotBlank(message = "El tipo de identificación es obligatorio")
+    private String tipoiden;
+
+    @NotBlank(message = "El número de identificación es obligatorio")
+    private String numeroiden;
+
+    @NotBlank(message = "La fecha de nacimiento es obligatoria")
+    private String fechanac;
+
+    @NotBlank(message = "La ocupación es obligatoria")
+    private String ocupacion;
+
+    @NotBlank(message = "El puesto a aplicar es obligatorio")
+    private String puesto;
+
+    @NotBlank(message = "El estado civil es obligatorio")
+    private String estadocivil;
+
+    @NotBlank(message = "La nacionalidad es obligatoria")
+    private String nacionalidad;
+
+    @NotBlank(message = "El objetivo dentro de la empresa es obligatorio")
+    private String objetivo;
+
     @OneToOne(mappedBy = "cv", cascade = CascadeType.ALL)
     @JsonManagedReference
     private CVHabilidades habilidades;

@@ -43,8 +43,17 @@ public class CVController {
         existingCV.setNombre(updatedCV.getNombre());
         existingCV.setEmail(updatedCV.getEmail());
         existingCV.setTelefono(updatedCV.getTelefono());
+        existingCV.setGenero(updatedCV.getGenero());
         existingCV.setCiudad(updatedCV.getCiudad());
         existingCV.setDireccion(updatedCV.getDireccion());
+        existingCV.setTipoiden(updatedCV.getTipoiden());
+        existingCV.setNumeroiden(updatedCV.getNumeroiden());
+        existingCV.setFechanac(updatedCV.getFechanac());
+        existingCV.setOcupacion(updatedCV.getOcupacion());
+        existingCV.setPuesto(updatedCV.getPuesto());
+        existingCV.setEstadocivil(updatedCV.getEstadocivil());
+        existingCV.setNacionalidad(updatedCV.getNacionalidad());
+        existingCV.setObjetivo(updatedCV.getObjetivo());
 
         if (updatedCV.getHabilidades() != null) {
             CVHabilidades habilidades = existingCV.getHabilidades();
