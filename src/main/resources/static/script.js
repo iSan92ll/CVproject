@@ -187,21 +187,37 @@ async function eliminarCV(id) {
     });
 }
 
-// --- VALIDACIONES DE CAMPOS ---
+// Validaciones>
 function validarFormulario() {
     let valido = true;
 
-    // Validar nombre: solo letras y espacios
     const nombre = document.getElementById("nombre").value.trim();
     if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre)) {
         mostrarNotificacion("El nombre solo puede contener letras, espacios y tildes.", "error");
         valido = false;
+    } else {
+        const palabras = nombre.split(/\s+/).filter(p => p.length >= 3);
+        if (palabras.length < 2) {
+            mostrarNotificacion("El nombre debe tener al menos dos palabras de mínimo 3 letras cada una.", "error");
+            valido = false;
+        }
+        if (palabras.some(p => /(.)\1\1/.test(p))) {
+            mostrarNotificacion("Las palabras no pueden tener más de dos letras iguales seguidas.", "error");
+            valido = false;
+        }
+        if (nombre.split(/\s+/).length > 5) {
+            mostrarNotificacion("El nombre no puede tener más de 5 palabras.", "error");
+            valido = false;
+        }
     }
 
     // Validar email
     const email = document.getElementById("email").value.trim();
-    if (!/^[^ ]{3,}@[^ ]+\.[a-z]{2,3}$/.test(email)) {
-        mostrarNotificacion("El correo debe tener al menos 3 caracteres antes del @ y un formato válido.", "error");
+    if (
+        !/^[^ ]{3,}@[^ ]+\.[a-z]{2,3}$/.test(email) ||
+        !(/\.(com|co)$/.test(email))
+    ) {
+        mostrarNotificacion("El correo debe tener al menos 3 caracteres antes del @, un formato válido y terminar en .com o .co.", "error");
         valido = false;
     }
 
@@ -223,6 +239,97 @@ function validarFormulario() {
     if (!fecha) {
         mostrarNotificacion("Por favor, selecciona una fecha de nacimiento.", "error");
         valido = false;
+    } else {
+        const hoy = new Date();
+        const nacimiento = new Date(fecha);
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        const m = hoy.getMonth() - nacimiento.getMonth();
+        if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
+            edad--;
+        }
+        if (edad < 18) {
+            mostrarNotificacion("Debes ser mayor de edad (18 años o más).", "error");
+            valido = false;
+        }
+        if (edad > 70) {
+            mostrarNotificacion("La edad máxima permitida es 70 años.", "error");
+            valido = false;
+        }
+    }
+
+    //Validar direccion
+    const direccion = document.getElementById("direccion").value.trim();
+    if (direccion.length < 10) {
+        mostrarNotificacion("La dirección debe tener al menos 10 caracteres.", "error");
+        valido = false;
+    }
+    if (!(/[a-zA-Z]/.test(direccion) && /\d/.test(direccion))) {
+        mostrarNotificacion("La dirección debe contener letras y números.", "error");
+        valido = false;
+    }
+    if (!/[^a-zA-Z0-9\s]/.test(direccion)) {
+        mostrarNotificacion("La dirección debe contener al menos un símbolo (ejemplo: #, -, .).", "error");
+        valido = false;
+    }
+    const palabrasClave = [
+        "carrera", "cra", "calle", "cll", "avenida", "av", "transversal", "transv", "autopista", "aut"
+    ];
+    const contienePalabraClave = palabrasClave.some(palabra =>
+        direccion.toLowerCase().includes(palabra)
+    );
+    if (!contienePalabraClave) {
+        mostrarNotificacion("La dirección debe contener al menos una de las siguientes palabras o abreviaturas: Carrera, Calle, Avenida, Transversal, Autopista.", "error");
+        valido = false;
+    }
+
+    //Validar documento de identidad
+    const tipoIden = document.getElementById("tipoiden").value;
+    const numeroIden = document.getElementById("numeroiden").value.trim();
+    if (!tipoIden) {
+        mostrarNotificacion("Por favor, selecciona un tipo de documento de identidad.", "error");
+        valido = false;
+    } else {
+        let regex;
+        switch (tipoIden) {
+            case "Cédula de ciudadanía":
+                regex = /^\d{6,10}$/;
+                if (!regex.test(numeroIden)) {
+                    mostrarNotificacion("La cédula de ciudadanía debe tener entre 6 y 10 dígitos.", "error");
+                    valido = false;
+                }
+                break;
+            case "Cédula de extranjería":
+                regex = /^\d{6,10}$/;
+                if (!regex.test(numeroIden)) {
+                    mostrarNotificacion("La cédula de extranjería debe tener entre 6 y 10 dígitos.", "error");
+                    valido = false;
+                }
+                break;
+            case "Pasaporte":
+                regex = /^[a-zA-Z0-9]{6,9}$/;
+                if (!regex.test(numeroIden)) {
+                    mostrarNotificacion("El pasaporte debe tener entre 6 y 9 caracteres alfanuméricos.", "error");
+                    valido = false;
+                }
+                break;
+            case "Tarjeta de identidad":
+                regex = /^\d{6,10}$/;
+                if (!regex.test(numeroIden)) {
+                    mostrarNotificacion("La tarjeta de identidad debe tener entre 6 y 10 dígitos.", "error");
+                    valido = false;
+                }
+                break;
+            case "Licencia de conducción":
+                regex = /^[a-zA-Z0-9]{6,10}$/;
+                if (!regex.test(numeroIden)) {
+                    mostrarNotificacion("La licencia de conducción debe tener entre 6 y 10 caracteres numéricos.", "error");
+                    valido = false;
+                }
+                break;
+            default:
+                mostrarNotificacion("Tipo de documento de identidad no válido.", "error");
+                valido = false;
+        }
     }
 
     // Validar todos los campos obligatorios vacíos

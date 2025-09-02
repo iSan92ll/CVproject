@@ -38,7 +38,15 @@
         <label for="idiomas">Idiomas:</label>
         <input type="text" id="idiomas" placeholder="Idiomas" required>
         <label for="tipoiden">Tipo de Identificación:</label>
-        <input type="text" id="tipoiden" placeholder="Tipo de Identificación" required>
+        <select id="tipoiden" name="tipoiden" required>
+            <option value="" disabled selected>Seleccione el tipo de identificación</option>
+            <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
+            <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
+            <option value="Cédula de Extranjería">Cédula de Extranjería</option>
+            <option value="Linecia de Conducción">Licencia de Conducción</option>
+            <option value="Pasaporte">Pasaporte</option>
+            <option value="Otro">Otro</option>
+        </select>
         <label for="numeroiden">Número de Identificación:</label>
         <input type="text" id="numeroiden" placeholder="Número de Identificación" required>
         <label for="fechanac">Fecha de Nacimiento:</label>
@@ -48,7 +56,14 @@
         <label for="puesto">Puesto a aplicar:</label>
         <input type="text" id="puesto" placeholder="Puesto a aplicar" required>
         <label for="estadocivil">Estado Civil:</label>
-        <input type="text" id="estadocivil" placeholder="Estado Civil" required>
+        <select id="estadocivil" name="estadocivil" required>
+            <option value="" disabled selected>Seleccione su estado civil</option>
+            <option value="Soltero/a">Soltero/a</option>
+            <option value="Casado/a">Casado/a</option>
+            <option value="Divorciado/a">Divorciado/a</option>
+            <option value="Viudo/a">Viudo/a</option>
+            <option value="Unión Libre">Unión Libre</option>
+        </select>
         <label for="pais">Nacionalidad:</label>
         <input list="paises" id="pais" placeholder="Escribe un país...">
         <datalist id="paises"></datalist>
