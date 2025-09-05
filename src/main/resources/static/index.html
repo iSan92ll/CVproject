@@ -2,106 +2,394 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Gestión de CVs</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de CVs - Colombia</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'><path d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-6 14H8c-.55 0-1-.45-1-1s.45-1 1-1h5c.55 0 1 .45 1 1s-.45 1-1 1zm3-4H8c-.55 0-1-.45-1-1s.45-1 1-1h8c.55 0 1 .45 1 1s-.45 1-1 1zm0-4H8c-.55 0-1-.45-1-1s.45-1 1-1h8c.55 0 1 .45 1 1s-.45 1-1 1z'/></svg>" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Formulario de CV</h1>
-    <form id="cvForm">
-        <input type="hidden" id="cvId">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" placeholder="Nombre completo" required>
-        <label for="email">Email:</label>
-        <input type="email" id="email" placeholder="Correo electrónico" required>
-        <label for="telefono">Teléfono:</label>
-        <input type="text" id="telefono" placeholder="Teléfono" required>
-        <label for="genero">Género:</label>
-        <select id="genero" name="generos" required>
-            <option value="" disabled selected>Seleccione su género</option>
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-            <option value="Otro">Otro</option>
-        </select>
-        <label for="ciudad">Ciudad:</label>
-        <input list="ciudades" id="ciudad" placeholder="Escribe una ciudad...">
-        <datalist id="ciudades"></datalist>
-        <label for="direccion">Dirección:</label>
-        <input type="text" id="direccion" placeholder="Dirección" required>
-        <label for="habilidad">Habilidades:</label>
-        <input type="text" id="habilidad" placeholder="Habilidades" required>
-        <label for="experiencia">Experiencia:</label>
-        <input type="text" id="experiencia" placeholder="Experiencia" required>
-        <label for="educacion">Educación:</label>
-        <input type="text" id="educacion" placeholder="Educación" required>
-        <label for="idiomas">Idiomas:</label>
-        <input type="text" id="idiomas" placeholder="Idiomas" required>
-        <label for="tipoiden">Tipo de Identificación:</label>
-        <select id="tipoiden" name="tipoiden" required>
-            <option value="" disabled selected>Seleccione el tipo de identificación</option>
-            <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
-            <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
-            <option value="Cédula de Extranjería">Cédula de Extranjería</option>
-            <option value="Linecia de Conducción">Licencia de Conducción</option>
-            <option value="Pasaporte">Pasaporte</option>
-            <option value="Otro">Otro</option>
-        </select>
-        <label for="numeroiden">Número de Identificación:</label>
-        <input type="text" id="numeroiden" placeholder="Número de Identificación" required>
-        <label for="fechanac">Fecha de Nacimiento:</label>
-        <input type="date" id="fechanac" placeholder="Fecha de Nacimiento" required>
-        <label for="ocupacion">Ocupación:</label>
-        <input type="text" id="ocupacion" placeholder="Ocupación" required>
-        <label for="puesto">Puesto a aplicar:</label>
-        <input type="text" id="puesto" placeholder="Puesto a aplicar" required>
-        <label for="estadocivil">Estado Civil:</label>
-        <select id="estadocivil" name="estadocivil" required>
-            <option value="" disabled selected>Seleccione su estado civil</option>
-            <option value="Soltero/a">Soltero/a</option>
-            <option value="Casado/a">Casado/a</option>
-            <option value="Divorciado/a">Divorciado/a</option>
-            <option value="Viudo/a">Viudo/a</option>
-            <option value="Unión Libre">Unión Libre</option>
-        </select>
-        <label for="pais">Nacionalidad:</label>
-        <input list="paises" id="pais" placeholder="Escribe un país...">
-        <datalist id="paises"></datalist>
-        <label for="objetivo">Objetivo dentro de la empresa:</label>
-        <input type="text" id="objetivo" placeholder="Objetivo dentro de la empresa" required>
-        <button type="submit" id="btnguardar">Guardar</button>
-        <button type="button" id="btncancelar" style="display:none;">Cancelar</button>
-    </form>
+    <div class="container-fluid h-100">
+        <header class="py-3 mb-4 border-bottom">
+            <h1 class="text-center">Sistema de Gestión de CVs - Colombia</h1>
+            <p class="text-center text-muted">Complete su información y visualice en diferentes formatos</p>
+        </header>
 
-    <h2>Lista de CVs</h2>
-    <table border="1" id="cvTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Tipo de Identificación</th>
-                <th>Número de Identificación</th>
-                <th>Fecha de Nacimiento</th>
-                <th>Genero</th>
-                <th>Estado Civil</th>
-                <th>Ciudad</th>
-                <th>Dirección</th>
-                <th>Ocupación</th>
-                <th>Puesto a aplicar</th>
-                <th>Nacionalidad</th>
-                <th>Objetivo dentro de la empresa</th>
-                <th>Habilidades</th>
-                <th>Experiencia</th>
-                <th>Educación</th>
-                <th>Idiomas</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="listaCVs"></tbody>
-    </table>
+        <div class="row h-100">
+            <!-- Panel izquierdo: Selector de plantillas -->
+            <div class="col-lg-4 left-panel">
+                <h2>Seleccione formato de CV</h2>
+                
+                <div class="options">
+                    <div class="option" data-template="plantilla_antigua.html">
+                        <img src="antiguo.jpg" alt="Plantilla Antigua" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM4ODgiPkFudGlndW88L3RleHQ+PC9zdmc+'">
+                        <p>Formato Antiguo</p>
+                    </div>
+                    <div class="option" data-template="plantilla_clasico.html">
+                        <img src="clasico.jpg" alt="Plantilla Clásico" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM4ODgiPkNsw6FzaWNvPC90ZXh0Pjwvc3ZnPg=='">
+                        <p>Formato Clásico</p>
+                    </div>
+                    <div class="option" data-template="plantilla_actual.html">
+                        <img src="actual.jpg" alt="Plantilla Actual" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjM1ZW0iIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM4ODgiPkFjdHVhbDwvdGV4dD48L3N2Zz4='">
+                        <p>Formato Actual</p>
+                    </div>
+                </div>
 
+                <div class="preview mt-4">
+                    <div class="mb-3">
+                        <label for="personaSelect" class="form-label">Seleccionar CV existente:</label>
+                        <select id="personaSelect" class="form-select">
+                            <option value="" selected disabled>-- Seleccione una persona --</option>
+                            <!-- Las opciones se cargarán dinámicamente -->
+                        </select>
+                    </div>
+                    
+                    <button id="btn-ejemplar" class="btn btn-primary w-100">
+                        <i class="bi bi-eye"></i> Ver Vista Previa
+                    </button>
+                </div>
+            </div>
+
+            <!-- Panel derecho: Formulario de ingreso de datos -->
+            <div class="col-lg-8 right-panel">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0">Formulario de Datos</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="cvForm" class="needs-validation" novalidate>
+                            <input type="hidden" id="cvId">
+                            
+                            <div class="accordion" id="formAccordion">
+                                <!-- Información Personal -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#personalInfo">
+                                            <i class="bi bi-person me-2"></i> Información Personal
+                                        </button>
+                                    </h2>
+                                    <div id="personalInfo" class="accordion-collapse collapse show" data-bs-parent="#formAccordion">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="nombre" class="form-label required">Nombre Completo</label>
+                                                    <input type="text" class="form-control" id="nombre" placeholder="Ej: María González Rodríguez" required>
+                                                    <div class="invalid-feedback">
+                                                        El nombre debe contener solo letras, espacios y tildes (mínimo 2 palabras de 3 letras cada una).
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="email" class="form-label required">Email</label>
+                                                    <input type="email" class="form-control" id="email" placeholder="Ej: maria.gonzalez@email.com" required>
+                                                    <div class="invalid-feedback">
+                                                        El correo debe tener un formato válido y terminar en .com, .co, .org o .gov.
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="telefono" class="form-label required">Teléfono</label>
+                                                    <div class="input-group">
+                                                        <select class="form-select col-4" id="codigoPais" style="max-width: 200px;">
+                                                        </select>
+                                                        <input type="text" class="form-control" id="telefono" placeholder="3001234567" required>
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        El teléfono debe tener entre 7 y 10 dígitos.
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="genero" class="form-label required">Género</label>
+                                                    <select class="form-select" id="genero" required>
+                                                        <option value="" disabled selected>Seleccione su género</option>
+                                                        <option value="Masculino">Masculino</option>
+                                                        <option value="Femenino">Femenino</option>
+                                                        <option value="Otro">Otro</option>
+                                                        <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Por favor, selecciona un género.
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="fechanac" class="form-label required">Fecha de Nacimiento</label>
+                                                    <input type="date" class="form-control" id="fechanac" required>
+                                                    <div class="invalid-feedback">
+                                                        Debes ser mayor de edad (18 años o más) y menor de 70 años.
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="estadocivil" class="form-label required">Estado Civil</label>
+                                                    <select class="form-select" id="estadocivil" required>
+                                                        <option value="" disabled selected>Seleccione su estado civil</option>
+                                                        <option value="Soltero(a)">Soltero(a)</option>
+                                                        <option value="Casado(a)">Casado(a)</option>
+                                                        <option value="Unión Libre">Unión Libre</option>
+                                                        <option value="Divorciado(a)">Divorciado(a)</option>
+                                                        <option value="Viudo(a)">Viudo(a)</option>
+                                                        <option value="Separado(a)">Separado(a)</option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Por favor, selecciona un estado civil.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Documentos de Identificación -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#identificationInfo">
+                                            <i class="bi bi-card-checklist me-2"></i> Documentos de Identificación
+                                        </button>
+                                    </h2>
+                                    <div id="identificationInfo" class="accordion-collapse collapse" data-bs-parent="#formAccordion">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="tipoiden" class="form-label required">Tipo de Documento</label>
+                                                    <select class="form-select" id="tipoiden" required>
+                                                        <option value="" disabled selected>Seleccione el tipo de documento</option>
+                                                        <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
+                                                        <option value="Cédula de Extranjería">Cédula de Extranjería</option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Por favor, selecciona un tipo de documento.
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="numeroiden" class="form-label required">Número de Documento</label>
+                                                    <input type="text" class="form-control" id="numeroiden" placeholder="Ej: 1023456789" required>
+                                                    <div class="invalid-feedback">
+                                                        El número de documento debe tener entre 6 y 10 caracteres numéricos.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Ubicación y Contacto -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#locationInfo">
+                                            <i class="bi bi-geo-alt me-2"></i> Ubicación y Contacto
+                                        </button>
+                                    </h2>
+                                    <div id="locationInfo" class="accordion-collapse collapse" data-bs-parent="#formAccordion">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="pais" class="form-label">Nacionalidad</label>
+                                                    <input list="paises" class="form-control" id="pais" placeholder="Escribe un país...">
+                                                    <datalist id="paises"></datalist>
+                                                    <div class="invalid-feedback">
+                                                        Por favor selecciona un país válido de la lista.
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="ciudad" class="form-label">Ciudad de Residencia</label>
+                                                    <input list="ciudades" class="form-control" id="ciudad" placeholder="Escribe una ciudad...">
+                                                    <datalist id="ciudades"></datalist>
+                                                    <div class="invalid-feedback">
+                                                        Por favor selecciona una ciudad válida de la lista.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="direccion" class="form-label required">Dirección Completa</label>
+                                                <div class="row g-2 mb-2">
+                                                    <div class="col-md-3">
+                                                        <select class="form-select" id="tipoVia">
+                                                            <option value="Calle">Calle</option>
+                                                            <option value="Carrera">Carrera</option>
+                                                            <option value="Avenida">Avenida</option>
+                                                            <option value="Transversal">Transversal</option>
+                                                            <option value="Diagonal">Diagonal</option>
+                                                            <option value="Circular">Circular</option>
+                                                            <option value="Manzana">Manzana</option>
+                                                            <option value="Variante">Variante</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control" id="numVia" placeholder="Número">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <select class="form-select" id="sufijoVia">
+                                                            <option value="">N/A</option>
+                                                            <option value="Calle">Calle</option>
+                                                            <option value="Carrera">Carrera</option>
+                                                            <option value="Avenida">Avenida</option>
+                                                            <option value="Transversal">Transversal</option>
+                                                            <option value="Diagonal">Diagonal</option>
+                                                            <option value="Circular">Circular</option>
+                                                            <option value="Manzana">Manzana</option>
+                                                            <option value="Variante">Variante</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control" id="numPlaca" placeholder="No.">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control" id="apto" placeholder="Casa, Apto, Oficina...">
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" id="direccion" placeholder="Ej: Carrera 45 # 26-85, Edificio Torre Central, Apto 302" required style="display: none;">
+                                                <div class="invalid-feedback">
+                                                    La dirección debe contener letras, números y al menos un símbolo (ej: #, -). Debe incluir tipo de vía (Calle, Carrera, etc.).
+                                                </div>
+                                                <small class="form-text text-muted">Ejemplo: Carrera 45 # 26-85 Sur, Edificio Torre Central, Apto 302</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Información Profesional -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#professionalInfo">
+                                            <i class="bi bi-briefcase me-2"></i> Información Profesional
+                                        </button>
+                                    </h2>
+                                    <div id="professionalInfo" class="accordion-collapse collapse" data-bs-parent="#formAccordion">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="ocupacion" class="form-label required">Ocupación o Profesión Actual</label>
+                                                    <input type="text" class="form-control" id="ocupacion" placeholder="Ej: Ingeniero de Sistemas" required>
+                                                    <div class="invalid-feedback">
+                                                        La ocupación no puede estar vacía.
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="puesto" class="form-label required">Puesto al que aplica</label>
+                                                    <input type="text" class="form-control" id="puesto" placeholder="Ej: Desarrollador Frontend" required>
+                                                    <div class="invalid-feedback">
+                                                        El puesto no puede estar vacío.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="objetivo" class="form-label required">Objetivo Profesional</label>
+                                                <textarea class="form-control" id="objetivo" rows="3" placeholder="Describa sus metas profesionales y lo que espera lograr en su carrera..." required></textarea>
+                                                <div class="invalid-feedback">
+                                                    El objetivo profesional no puede estar vacío.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Estudios y Formación -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#educationInfo">
+                                            <i class="bi bi-book me-2"></i> Estudios y Formación
+                                        </button>
+                                    </h2>
+                                    <div id="educationInfo" class="accordion-collapse collapse" data-bs-parent="#formAccordion">
+                                        <div class="accordion-body">
+                                            <div id="estudios-container">
+                                                <div class="estudio-item row g-2 mb-2">
+                                                    <div class="col-md-4">
+                                                        <select class="form-select nivel-estudio" name="nivelEstudio[]">
+                                                            <option value="" disabled selected>Nivel de estudio</option>
+                                                            <option value="Bachiller">Bachiller</option>
+                                                            <option value="Técnico">Técnico</option>
+                                                            <option value="Tecnólogo">Tecnólogo</option>
+                                                            <option value="Profesional">Profesional</option>
+                                                            <option value="Especialización">Especialización</option>
+                                                            <option value="Maestría">Maestría</option>
+                                                            <option value="Doctorado">Doctorado</option>
+                                                            <option value="Curso">Curso/Certificación</option>
+                                                            <option value="Diplomado">Diplomado</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control titulo-estudio" name="tituloEstudio[]" placeholder="Título obtenido (Ej: Técnico en Sistemas)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-outline-primary btn-sm mt-2" id="add-estudio-btn">
+                                                <i class="bi bi-plus-circle"></i> Agregar otro estudio
+                                            </button>
+                                            <div class="invalid-feedback">
+                                                Debe agregar al menos un estudio.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Habilidades y Competencias -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#skillsInfo">
+                                            <i class="bi bi-star me-2"></i> Habilidades y Competencias
+                                        </button>
+                                    </h2>
+                                    <div id="skillsInfo" class="accordion-collapse collapse" data-bs-parent="#formAccordion">
+                                        <div class="accordion-body">
+                                            <div class="mb-3">
+                                                <label for="habilidad" class="form-label required">Habilidades Técnicas</label>
+                                                <textarea class="form-control" id="habilidad" rows="3" placeholder="Enumere sus habilidades técnicas separadas por coma (Ej: JavaScript, HTML, CSS, React, Node.js)..." required></textarea>
+                                                <div class="invalid-feedback">
+                                                    Las habilidades no pueden estar vacías.
+                                                    </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="experiencia" class="form-label required">Experiencia Laboral</label>
+                                                <textarea class="form-control" id="experiencia" rows="3" placeholder="Describa su experiencia laboral previa (Empresa, cargo, periodos, logros)..." required></textarea>
+                                                <div class="invalid-feedback">
+                                                    La experiencia no puede estar vacía.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="idiomas" class="form-label required">Idiomas</label>
+                                                <textarea class="form-control" id="idiomas" rows="2" placeholder="Enumere los idiomas que domina y su nivel (Ej: Inglés - Avanzado, Francés - Básico)..." required></textarea>
+                                                <div class="invalid-feedback">
+                                                    Los idiomas no pueden estar vacíos.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" id="btnguardar" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-check-circle"></i> Guardar CV
+                                </button>
+                                <button type="button" id="btncancelar" class="btn btn-secondary" style="display:none;">
+                                    <i class="bi bi-x-circle"></i> Cancelar Edición
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para vista previa -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <iframe id="iframe-template" src=""></iframe>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="script.js"></script>
 </body>

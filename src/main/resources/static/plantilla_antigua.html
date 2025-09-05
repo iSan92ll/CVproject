@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formato Único Hoja de Vida</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      margin: 20px;
+    }
+    .container {
+      border: 2px solid #000;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+    h2 {
+      background: #004080;
+      color: #fff;
+      padding: 5px 10px;
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+    }
+    table td, table th {
+      border: 1px solid #000;
+      padding: 8px;
+      font-size: 14px;
+    }
+    .label {
+      width: 35%;
+      font-weight: bold;
+    }
+    .input {
+      width: 65%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>FORMATO ÚNICO - HOJA DE VIDA</h1>
+    <p style="text-align:center;">Persona Natural (Leyes 190 de 1995, 489 y 443 de 1998)</p>
+
+    <!-- DATOS PERSONALES -->
+    <h2>1. DATOS PERSONALES</h2>
+    <table id="tabla-datos-personales">
+      <tr>
+        <td class="label">Nombre Completo</td>
+        <td class="input" id="nombre-completo"></td>
+      </tr>
+      <tr>
+        <td class="label">Documento de Identificación</td>
+        <td class="input" id="documento-identificacion"></td>
+      </tr>
+      <tr>
+        <td class="label">Sexo</td>
+        <td class="input" id="sexo"></td>
+      </tr>
+      <tr>
+        <td class="label">Nacionalidad</td>
+        <td class="input" id="nacionalidad"></td>
+      </tr>
+      <tr>
+        <td class="label">País</td>
+        <td class="input" id="pais"></td>
+      </tr>
+      <tr>
+        <td class="label">Fecha de Nacimiento</td>
+        <td class="input" id="fecha-nacimiento"></td>
+      </tr>
+      <tr>
+        <td class="label">Dirección</td>
+        <td class="input" id="direccion"></td>
+      </tr>
+      <tr>
+        <td class="label">Teléfono</td>
+        <td class="input" id="telefono"></td>
+      </tr>
+      <tr>
+        <td class="label">Email</td>
+        <td class="input" id="email"></td>
+      </tr>
+    </table>
+
+    <!-- FORMACIÓN ACADÉMICA -->
+    <h2>2. FORMACIÓN ACADÉMICA</h2>
+    <table id="tabla-formacion">
+      <tr>
+        <th>Nivel de estudio</th>
+        <th>Nombre de los estudios</th>
+      </tr>
+      <tr>
+        <td class="nivel-estudio-1"></td>
+        <td class="nombre-estudio-1"></td>
+      </tr>
+      <tr>
+        <td class="nivel-estudio-2"></td>
+        <td class="nombre-estudio-2"></td>
+      </tr>
+      <tr>
+        <td class="nivel-estudio-3"></td>
+        <td class="nombre-estudio-3"></td>
+      </tr>
+    </table>
+
+    <!-- EXPERIENCIA LABORAL -->
+    <h2>3. EXPERIENCIA LABORAL</h2>
+    <table id="tabla-experiencia">
+      <tr>
+        <th>Empresa</th>
+        <th>Tiempo</th>
+        <th>Cargo</th>
+      </tr>
+      <tr>
+        <td class="empresa-1"></td>
+        <td class="tiempo-1"></td>
+        <td class="cargo-1"></td>
+      </tr>
+      <tr>
+        <td class="empresa-2"></td>
+        <td class="tiempo-2"></td>
+        <td class="cargo-2"></td>
+      </tr>
+      <tr>
+        <td class="empresa-3"></td>
+        <td class="tiempo-3"></td>
+        <td class="cargo-3"></td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

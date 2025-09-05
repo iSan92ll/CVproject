@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Plantilla CV Moderna</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; }
+    .left-panel { width: 35%; background-color: #1e3a8a; color: white; padding: 30px; box-sizing: border-box; }
+    .foto-box { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #fff; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-style: italic; text-align: center; color: rgba(255,255,255,0.8); }
+    .section { margin-bottom: 25px; }
+    .section h2 { font-size: 18px; margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.5); padding-bottom: 5px; }
+    .section p { margin: 5px 0; font-size: 14px; }
+    .right-panel { flex: 1; background-color: #fff; padding: 30px; box-sizing: border-box; overflow-y: auto; }
+    .right-panel h1 { font-size: 28px; margin-bottom: 5px; }
+    .right-panel h3 { font-size: 18px; margin-bottom: 15px; color: #555; }
+    .right-section { margin-bottom: 30px; }
+    .right-section h2 { font-size: 18px; margin-bottom: 10px; border-bottom: 2px solid #1e3a8a; padding-bottom: 5px; color: #1e3a8a; }
+    .right-section p { font-size: 14px; margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <!-- Panel izquierdo -->
+  <div class="left-panel">
+    <div class="foto-box">Pegue aquí la foto</div>
+
+    <div class="section">
+      <h2>Contacto</h2>
+      <p>Email: <span id="email"></span></p>
+      <p>Tel: <span id="telefono"></span></p>
+      <p>Dirección: <span id="direccion"></span></p>
+      <p>Ciudad: <span id="ciudad"></span></p>
+    </div>
+
+    <div class="section">
+      <h2>Aptitudes</h2>
+      <p id="habilidad"></p>
+    </div>
+
+    <div class="section">
+      <h2>Objetivo laboral</h2>
+      <p id="objetivo"></p>
+    </div>
+  </div>
+
+  <!-- Panel derecho -->
+  <div class="right-panel">
+    <h1 id="nombre">Nombre Apellido</h1>
+    <h3 id="ocupacion">Cargo Profesional</h3>
+
+    <div class="right-section">
+      <h2>Idiomas</h2>
+      <p id="idiomas"></p>
+    </div>
+
+    <div class="right-section">
+      <h2>Estudios</h2>
+      <p id="educacion"></p>
+    </div>
+
+    <div class="right-section">
+      <h2>Experiencia</h2>
+      <p id="experiencia"></p>
+    </div>
+  </div>
+</body>
+</html>

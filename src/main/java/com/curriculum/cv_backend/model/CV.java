@@ -19,7 +19,7 @@ public class CV {
     @Email(message = "Correo inválido")
     private String email;
 
-    @Pattern(regexp = "\\d{10}", message = "Teléfono inválido")
+    @NotBlank(message = "Teléfono inválido")
     private String telefono;
 
     @NotBlank(message = "La ciudad es obligatoria")
