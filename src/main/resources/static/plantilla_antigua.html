@@ -1,140 +1,124 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Formato Único Hoja de Vida</title>
-  <style>
+    <meta charset="UTF-8">
+    <title>Hoja de Vida - Plantilla Antigua</title>
+    <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #fff;
-      margin: 20px;
+        font-family: Arial, sans-serif;
+        background: #f9f9f9;
+        padding: 20px;
     }
     .container {
-      border: 2px solid #000;
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 5px;
+        max-width: 650px;
+        margin: 20px auto;
+        background: #fff;
+        border: 2px solid #007BFF;
+        padding: 15px;
     }
     h2 {
-      background: #004080;
-      color: #fff;
-      padding: 5px 10px;
-      margin-top: 20px;
+        background: #007BFF;
+        color: #fff;
+        padding: 6px;
+        margin: 15px 0;
+        font-size: 18px;
     }
     table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 15px;
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
     }
-    table td, table th {
-      border: 1px solid #000;
-      padding: 8px;
-      font-size: 14px;
+    td, th {
+        border: 1px solid #ccc;
+        padding: 5px;
+        font-size: 13px;
+        text-align: left;
     }
-    .label {
-      width: 35%;
-      font-weight: bold;
+    th {
+        background: #f0f0f0;
     }
-    .input {
-      width: 65%;
+    .foto {
+        width: 100px;
+        height: 120px;
+        border: 1px solid #aaa;
+        text-align: center;
+        font-size: 11px;
+        color: #666;
     }
-  </style>
+    .objetivo {
+        border: 1px solid #007BFF;
+        padding: 8px;
+        font-size: 13px;
+        min-height: 50px;
+    }
+    .experiencia {
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+    .exp-header {
+        display: flex;
+        justify-content: space-between;
+        background: #f1f1f1;
+        padding: 8px;
+        border: 1px solid #ccc;
+    }
+    .exp-header span {
+        flex: 1;
+        text-align: center;
+    }
+    .exp-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .exp-list li {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 8px;
+        border-bottom: 1px solid #ccc;
+    }
+    .exp-list li span {
+        flex: 1;
+        text-align: center;
+    }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>FORMATO ÚNICO - HOJA DE VIDA</h1>
-    <p style="text-align:center;">Persona Natural (Leyes 190 de 1995, 489 y 443 de 1998)</p>
-
-    <!-- DATOS PERSONALES -->
-    <h2>1. DATOS PERSONALES</h2>
-    <table id="tabla-datos-personales">
-      <tr>
-        <td class="label">Nombre Completo</td>
-        <td class="input" id="nombre-completo"></td>
-      </tr>
-      <tr>
-        <td class="label">Documento de Identificación</td>
-        <td class="input" id="documento-identificacion"></td>
-      </tr>
-      <tr>
-        <td class="label">Sexo</td>
-        <td class="input" id="sexo"></td>
-      </tr>
-      <tr>
-        <td class="label">Nacionalidad</td>
-        <td class="input" id="nacionalidad"></td>
-      </tr>
-      <tr>
-        <td class="label">País</td>
-        <td class="input" id="pais"></td>
-      </tr>
-      <tr>
-        <td class="label">Fecha de Nacimiento</td>
-        <td class="input" id="fecha-nacimiento"></td>
-      </tr>
-      <tr>
-        <td class="label">Dirección</td>
-        <td class="input" id="direccion"></td>
-      </tr>
-      <tr>
-        <td class="label">Teléfono</td>
-        <td class="input" id="telefono"></td>
-      </tr>
-      <tr>
-        <td class="label">Email</td>
-        <td class="input" id="email"></td>
-      </tr>
+<div class="container">
+    <h2>INFORMACIÓN GENERAL</h2>
+    <table>
+        <tr>
+            <td><strong>Nombre:</strong> <span id="antigua-nombre"></span></td>
+            <td rowspan="4" class="foto" id="antigua-foto"></td>
+        </tr>
+        <tr><td><strong>Cédula:</strong> <span id="antigua-cedula"></span></td></tr>
+        <tr><td><strong>Dirección:</strong> <span id="antigua-direccion"></span></td></tr>
+        <tr><td><strong>Ciudad:</strong> <span id="antigua-ciudad"></span></td></tr>
+        <tr><td colspan="2"><strong>Teléfono:</strong> <span id="antigua-telefono"></span></td></tr>
+        <tr><td colspan="2"><strong>Email:</strong> <span id="antigua-email"></span></td></tr>
+        <tr><td colspan="2"><strong>Nacionalidad:</strong> <span id="antigua-nacionalidad"></span></td></tr>
     </table>
 
-    <!-- FORMACIÓN ACADÉMICA -->
-    <h2>2. FORMACIÓN ACADÉMICA</h2>
-    <table id="tabla-formacion">
-      <tr>
-        <th>Nivel de estudio</th>
-        <th>Nombre de los estudios</th>
-      </tr>
-      <tr>
-        <td class="nivel-estudio-1"></td>
-        <td class="nombre-estudio-1"></td>
-      </tr>
-      <tr>
-        <td class="nivel-estudio-2"></td>
-        <td class="nombre-estudio-2"></td>
-      </tr>
-      <tr>
-        <td class="nivel-estudio-3"></td>
-        <td class="nombre-estudio-3"></td>
-      </tr>
+    <h2>INFORMACIÓN PERSONAL</h2>
+    <table>
+        <tr><td><strong>Estado Civil:</strong> <span id="antigua-estado_civil"></span> | <strong>Edad:</strong> <span id="antigua-edad"></span></td></tr>
+        <tr><td><strong>Género:</strong> <span id="antigua-genero"></span></td></tr>
+        <tr><td><strong>Nivel de Estudios:</strong> <span id="antigua-nivel_estudios"></span></td></tr>
+        <tr><td><strong>Idiomas:</strong> <span id="antigua-idiomas"></span></td></tr>
     </table>
 
-    <!-- EXPERIENCIA LABORAL -->
-    <h2>3. EXPERIENCIA LABORAL</h2>
-    <table id="tabla-experiencia">
-      <tr>
-        <th>Empresa</th>
-        <th>Tiempo</th>
-        <th>Cargo</th>
-      </tr>
-      <tr>
-        <td class="empresa-1"></td>
-        <td class="tiempo-1"></td>
-        <td class="cargo-1"></td>
-      </tr>
-      <tr>
-        <td class="empresa-2"></td>
-        <td class="tiempo-2"></td>
-        <td class="cargo-2"></td>
-      </tr>
-      <tr>
-        <td class="empresa-3"></td>
-        <td class="tiempo-3"></td>
-        <td class="cargo-3"></td>
-      </tr>
-    </table>
-  </div>
+    <h2>EXPERIENCIA LABORAL</h2>
+    <div class="experiencia">
+        <div class="exp-header">
+            <span><strong>Empresa</strong></span>
+            <span><strong>Tiempo</strong></span>
+            <span><strong>Cargo</strong></span>
+        </div>
+        <ul class="exp-list" id="antigua-exp-list"></ul>
+    </div>
+
+    <h2>OBJETIVO</h2>
+    <div class="objetivo" id="antigua-objetivo"></div>
+</div>
 </body>
 </html>

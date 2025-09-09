@@ -6,7 +6,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "cv")
+@Table(name = "cv_perfil")
 @Data
 public class CV {
     @Id
@@ -25,6 +25,7 @@ public class CV {
     @NotBlank(message = "La ciudad es obligatoria")
     private String ciudad;
 
+    @Column(columnDefinition = "TEXT")
     @NotBlank(message = "La dirección es obligatoria")
     private String direccion;
 
@@ -52,8 +53,21 @@ public class CV {
     @NotBlank(message = "La nacionalidad es obligatoria")
     private String nacionalidad;
 
+    @Column(columnDefinition = "TEXT")
     @NotBlank(message = "El objetivo dentro de la empresa es obligatorio")
     private String objetivo;
+
+    @Column(columnDefinition = "TEXT")
+    @NotBlank(message = "El perfil dentro de la persona es obligatorio")
+    private String perfil;
+
+    @Column(columnDefinition = "TEXT")
+    @NotBlank(message = "Las referencias son obligatorias")
+    private String referencias;
+    
+    @Column(columnDefinition = "TEXT")
+    @NotBlank(message = "La foto es obligatoria")
+    private String foto;
 
     @OneToOne(mappedBy = "cv", cascade = CascadeType.ALL)
     @JsonManagedReference

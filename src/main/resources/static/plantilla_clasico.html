@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -20,7 +20,6 @@
     .header {
       text-align: center;
     }
-    /* Recuadro vacío para foto */
     .foto-box {
       width: 150px;
       height: 180px;
@@ -32,6 +31,7 @@
       font-size: 12px;
       font-style: italic;
       color: #555;
+      overflow: hidden;
     }
     .header h1 {
       margin-top: 15px;
@@ -73,65 +73,43 @@
 </head>
 <body>
   <div class="container">
-    
-    <!-- Encabezado con recuadro para foto y nombre -->
     <div class="header">
-      <div class="foto-box">Pegue aquí la foto</div>
-      <h1 id="nombre">NOMBRE COMPLETO</h1>
+      <div class="foto-box" id="clasico-foto"></div>
+      <h1 id="clasico-nombre"></h1>
     </div>
 
-    <!-- Datos Personales -->
     <div class="section">
-      <div class="section-title">Datos Personales</div>
-      <div class="info-row"><div class="label">Documento de Identidad:</div><div class="value" id="documento">XXXXXXXX</div></div>
-      <div class="info-row"><div class="label">Fecha de Nacimiento:</div><div class="value" id="nacimiento">DD/MM/AAAA</div></div>
-      <div class="info-row"><div class="label">Lugar de Nacimiento:</div><div class="value" id="lugar">Ciudad</div></div>
-      <div class="info-row"><div class="label">Estado Civil:</div><div class="value" id="estado">Soltero</div></div>
-      <div class="info-row"><div class="label">Dirección:</div><div class="value" id="direccion">Calle XX # XX</div></div>
-      <div class="info-row"><div class="label">Celular:</div><div class="value" id="celular">000000000</div></div>
-      <div class="info-row"><div class="label">E-mail:</div><div class="value" id="email">correo@ejemplo.com</div></div>
+      <div class="section-title">Informacion personal</div>
+      <div class="info-row"><div class="label">Documento de Identidad:</div><div class="value" id="clasico-documento"></div></div>
+      <div class="info-row"><div class="label">Fecha de Nacimiento:</div><div class="value" id="clasico-nacimiento"></div></div>
+      <div class="info-row"><div class="label">Lugar de Nacimiento:</div><div class="value" id="clasico-lugar"></div></div>
+      <div class="info-row"><div class="label">Estado Civil:</div><div class="value" id="clasico-estado"></div></div>
+      <div class="info-row"><div class="label">Dirección:</div><div class="value" id="clasico-direccion"></div></div>
+      <div class="info-row"><div class="label">Celular:</div><div class="value" id="clasico-celular"></div></div>
+      <div class="info-row"><div class="label">E-mail:</div><div class="value" id="clasico-email"></div></div>
     </div>
 
-    <!-- Formación Académica -->
+    <div class="section">
+      <div class="section-title">Perfil</div>
+      <p id="clasico-perfil"></p>
+    </div>
+
     <div class="section">
       <div class="section-title">Formación Académica</div>
-      <div class="info-row"><div class="label">Profesional:</div><div class="value" id="profesional">Carrera - Universidad - Año</div></div>
-      <div class="info-row"><div class="label">Técnicos:</div><div class="value" id="tecnico">Nombre - Institución - Año</div></div>
-      <div class="info-row"><div class="label">Estudios Secundarios:</div><div class="value" id="secundarios">Nombre Colegio - Año</div></div>
+      <div class="info-row"><div class="label">Profesional:</div><div class="value" id="clasico-profesional"></div></div>
+      <div class="info-row"><div class="label">Técnicos:</div><div class="value" id="clasico-tecnico"></div></div>
+      <div class="info-row"><div class="label">Estudios Secundarios:</div><div class="value" id="clasico-secundarios"></div></div>
     </div>
 
-    <!-- Experiencia Laboral -->
     <div class="section">
       <div class="section-title">Experiencia Laboral</div>
-      <div class="job">
-        <h3 id="puesto1">Puesto Ocupado | Empresa</h3>
-        <p id="anio1"><strong>2020</strong></p>
-        <p id="desc1">Descripción corta de las tareas...</p>
-      </div>
-      <div class="job">
-        <h3 id="puesto2">Puesto Ocupado | Empresa</h3>
-        <p id="anio2"><strong>2018</strong></p>
-        <p id="desc2">Descripción corta de las tareas...</p>
-      </div>
+      <div id="clasico-experiencias"></div>
     </div>
 
-    <!-- Referencias -->
     <div class="section">
       <div class="section-title">Referencias</div>
-      <div class="reference">
-        <h3 id="ref1">Nombre de la Persona</h3>
-        <p id="refCargo1">Referencia Laboral</p>
-        <p id="refTel1">Teléfono: 000000000</p>
-        <p id="refMail1">E-mail: correo@ejemplo.com</p>
-      </div>
-      <div class="reference">
-        <h3 id="ref2">Nombre de la Persona</h3>
-        <p id="refCargo2">Referencia Laboral</p>
-        <p id="refTel2">Teléfono: 000000000</p>
-        <p id="refMail2">E-mail: correo@ejemplo.com</p>
-      </div>
+      <div id="clasico-referencias"></div>
     </div>
-    
   </div>
 </body>
 </html>

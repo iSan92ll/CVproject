@@ -54,6 +54,9 @@ public class CVController {
         existingCV.setEstadocivil(updatedCV.getEstadocivil());
         existingCV.setNacionalidad(updatedCV.getNacionalidad());
         existingCV.setObjetivo(updatedCV.getObjetivo());
+        existingCV.setPerfil(updatedCV.getPerfil());
+        existingCV.setReferencias(updatedCV.getReferencias());
+        existingCV.setFoto(updatedCV.getFoto());    
 
         if (updatedCV.getHabilidades() != null) {
             CVHabilidades habilidades = existingCV.getHabilidades();

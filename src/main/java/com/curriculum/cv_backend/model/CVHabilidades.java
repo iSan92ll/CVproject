@@ -16,9 +16,11 @@ public class CVHabilidades {
     @NotBlank(message = "Las habilidades son obligatorias")
     private String habilidad;
 
+    @Column(columnDefinition = "TEXT")
     @NotBlank(message = "La experiencia es obligatoria")
     private String experiencia;
 
+    @Column(columnDefinition = "TEXT")
     @NotBlank(message = "La educación es obligatoria")
     private String educacion;
 
