@@ -1,7 +1,6 @@
 package com.curriculum.cv_backend.service;
 
 import com.curriculum.cv_backend.model.CV;
-import com.curriculum.cv_backend.model.CVHabilidades;
 import com.curriculum.cv_backend.repository.CVRepository;
 import com.curriculum.cv_backend.repository.CVHabilidadesRepository;
 import org.springframework.stereotype.Service;
@@ -11,11 +10,9 @@ import java.util.List;
 public class CVService {
 
     private final CVRepository cvRepo;
-    private final CVHabilidadesRepository habilidadesRepo;
 
     public CVService(CVRepository cvRepo, CVHabilidadesRepository habilidadesRepo) {
         this.cvRepo = cvRepo;
-        this.habilidadesRepo = habilidadesRepo;
     }
 
     public CV save(CV cv) {

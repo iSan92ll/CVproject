@@ -13,13 +13,10 @@ const MAX_EXPERIENCIAS = 5;
 const MAX_REFERENCIAS = 3;
 const MAX_IDIOMAS = 5;
 const API_URL = "http://localhost:8080/api/cv";
-const NUMVERIFY_API_KEY = "60e3507689314a070a05c195500482ea";
 let editando = false;
 let cropper;
 
-// Reemplazo de alert y confirm por alertify
 function mostrarNotificacion(mensaje, tipo = 'success', tiempo = 5) {
-    // Cerrar notificaciones previas para evitar superposición
     alertify.dismissAll();
     
     if (tipo === 'error') {
@@ -50,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
     cargarCodigosTelefonicos();
     inicializarSelectorPlantillas();
     inicializarEventosBotones();
-    inicializarValidacionEnTiempoReal();
+    inicializarTelefonoIntl();
 
     const telefonoInput = document.getElementById('telefono');
     if (telefonoInput) {
@@ -104,21 +101,13 @@ async function cargarCiudadesColombia() {
         
         return lineas.map(linea => {
             const columnas = linea.split(',');
-            // Asumiendo que el formato es: Ciudad,País,Departamento,Código
             if (columnas[1] === 'Colombia') {
                 return columnas[0].replace(/"/g, '').trim();
             }
             return null;
-        }).filter(ciudad => ciudad !== null);
+        }).filter(name => name !== null);
     } catch (error) {
         console.error('Error al cargar ciudades de Colombia:', error);
-        // Devolver algunas ciudades principales por defecto
-        return [
-            "Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena",
-            "Cúcuta", "Soledad", "Ibagué", "Bucaramanga", "Soacha",
-            "Villavicencio", "Santa Marta", "Valledupar", "Bello", "Pereira",
-            "Manizales", "Montería", "Neiva", "Pasto", "Armenia"
-        ];
     }
 }
 
@@ -145,281 +134,6 @@ function inicializarEventosBotones() {
                 eliminarCV(selectedCvId);
             }
         });
-    }
-}
-
-// Inicializar validación en tiempo real
-function inicializarValidacionEnTiempoReal() {
-    // Validar campos al perder el foco
-    const camposValidables = document.querySelectorAll('input[required], select[required], textarea[required]');
-    camposValidables.forEach(campo => {
-        campo.addEventListener('blur', function() {
-            validarCampo(this);
-        });
-    });
-    
-    // Validar campos con expresiones regulares específicas
-    const nombre = document.getElementById('nombre');
-    if (nombre) {
-        nombre.addEventListener('blur', function() {
-            validarNombre(this);
-        });
-    }
-    
-    const email = document.getElementById('email');
-    if (email) {
-        email.addEventListener('blur', function() {
-            validarEmail(this);
-        });
-    }
-    
-    const telefono = document.getElementById('telefono');
-    if (telefono) {
-        telefono.addEventListener('blur', function() {
-            validarTelefono(this);
-        });
-    }
-    
-    const objetivo = document.getElementById('objetivo');
-    if (objetivo) {
-        objetivo.addEventListener('blur', function() {
-            validarObjetivo(this);
-        });
-    }
-    
-    const sobremi = document.getElementById('sobremi');
-    if (sobremi) {
-        sobremi.addEventListener('blur', function() {
-            validarSobreMi(this);
-        });
-    }
-}
-
-// Función para validar un campo individual
-function validarCampo(campo) {
-    const valor = campo.value.trim();
-    const id = campo.id;
-    
-    // Remover estado de validación previo
-    campo.classList.remove('is-valid', 'is-invalid');
-    
-    // Validar según el tipo de campo
-    if (!valor) {
-        mostrarErrorCampo(campo, 'Este campo es requerido');
-        return false;
-    }
-    
-    // Validaciones específicas por campo
-    switch(id) {
-        case 'nombre':
-            return validarNombre(campo);
-        case 'email':
-            return validarEmail(campo);
-        case 'telefono':
-            return validarTelefono(campo);
-        case 'objetivo':
-            return validarObjetivo(campo);
-        case 'sobremi':
-            return validarSobreMi(campo);
-        case 'numeroiden':
-            return validarNumeroIdentificacion(campo);
-        default:
-            // Para otros campos, solo verificar que no estén vacíos
-            campo.classList.add('is-valid');
-            return true;
-    }
-}
-
-// Validar nombre
-function validarNombre(campo) {
-    const valor = campo.value.trim();
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s']+$/;
-    
-    if (!valor) {
-        mostrarErrorCampo(campo, 'El nombre no puede estar vacío');
-        return false;
-    }
-    
-    if (!regex.test(valor)) {
-        mostrarErrorCampo(campo, 'El nombre solo puede contener letras, espacios, apóstrofes y tildes');
-        return false;
-    }
-    
-    const palabras = valor.split(/\s+/).filter(p => p.length >= 2);
-    if (palabras.length < 2) {
-        mostrarErrorCampo(campo, 'El nombre debe tener al menos dos palabras de mínimo 2 letras cada una');
-        return false;
-    }
-    
-    if (palabras.some(p => /(.)\1\1/.test(p))) {
-        mostrarErrorCampo(campo, 'Las palabras no pueden tener más de dos letras iguales seguidas');
-        return false;
-    }
-    
-    campo.classList.add('is-valid');
-    return true;
-}
-
-// Validar email
-function validarEmail(campo) {
-    const valor = campo.value.trim();
-    const emailRegex = /^[a-zA-Z0-9._%+-]{3,}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    
-    if (!valor) {
-        mostrarErrorCampo(campo, 'El email no puede estar vacío');
-        return false;
-    }
-    
-    if (!emailRegex.test(valor) || !(/\.(com|co|gov.co|gov.com|org|edu.co|net|info)$/i.test(valor))) {
-        mostrarErrorCampo(campo, 'El correo debe tener un formato válido y terminar en .com, .co, .org, .net o .info');
-        return false;
-    }
-    
-    campo.classList.add('is-valid');
-    return true;
-}
-
-// Validar teléfono
-function validarTelefono(campo) {
-    const valor = campo.value.trim();
-    const codigoPais = document.getElementById('codigoPais').value;
-    
-    if (!valor) {
-        mostrarErrorCampo(campo, 'El teléfono no puede estar vacío');
-        return false;
-    }
-    
-    if (!codigoPais) {
-        mostrarErrorCampo(campo, 'Por favor, selecciona un código de país');
-        return false;
-    }
-    
-    if (!/^\d{7,15}$/.test(valor)) {
-        mostrarErrorCampo(campo, 'El número de teléfono debe tener entre 7 y 15 dígitos');
-        return false;
-    }
-    
-    // Validar con API de NumVerify (solo si tenemos API key)
-    if (NUMVERIFY_API_KEY && NUMVERIFY_API_KEY !== 'TU_API_KEY_AQUI') {
-        validarTelefonoConAPI(codigoPais + valor, campo);
-    } else {
-        campo.classList.add('is-valid');
-    }
-    
-    return true;
-}
-
-// Validar teléfono con API de NumVerify
-async function validarTelefonoConAPI(numeroCompleto, campo) {
-    try {
-        const response = await fetch(`http://apilayer.net/api/validate?access_key=${NUMVERIFY_API_KEY}&number=${numeroCompleto}`);
-        const data = await response.json();
-        
-        if (data.valid) {
-            campo.classList.add('is-valid');
-        } else {
-            mostrarErrorCampo(campo, 'Número de teléfono no válido');
-        }
-    } catch (error) {
-        console.error('Error al validar teléfono:', error);
-        // Si falla la API, al menos validar formato básico
-        campo.classList.add('is-valid');
-    }
-}
-
-// Validar objetivo
-function validarObjetivo(campo) {
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-        mostrarErrorCampo(campo, 'El objetivo no puede estar vacío');
-        return false;
-    }
-    
-    // Verificar que empiece con verbo
-    const palabras = valor.split(' ');
-    const primeraPalabra = palabras[0].toLowerCase();
-    const verbosComunes = ['desarrollar', 'implementar', 'crear', 'diseñar', 'mejorar', 'optimizar', 'coordinar', 'gestionar', 'liderar', 'colaborar'];
-    
-    if (!verbosComunes.some(verbo => primeraPalabra.startsWith(verbo))) {
-        mostrarErrorCampo(campo, 'El objetivo debe comenzar con un verbo de acción (ej: desarrollar, implementar, crear)');
-        return false;
-    }
-    
-    // Verificar mínimo de palabras
-    if (palabras.length < 20) {
-        mostrarErrorCampo(campo, 'El objetivo debe tener al menos 20 palabras');
-        return false;
-    }
-    
-    // Validar con API de texto (simulada por ahora)
-    validarTextoConAPI(valor, campo, 'objetivo');
-    
-    return true;
-}
-
-// Validar "Sobre mí"
-function validarSobreMi(campo) {
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-        mostrarErrorCampo(campo, 'El campo "Sobre mí" no puede estar vacío');
-        return false;
-    }
-    
-    // Verificar mínimo de palabras
-    const palabras = valor.split(' ');
-    if (palabras.length < 20) {
-        mostrarErrorCampo(campo, 'El campo "Sobre mí" debe tener al menos 20 palabras');
-        return false;
-    }
-    
-    // Validar con API de texto (simulada por ahora)
-    validarTextoConAPI(valor, campo, 'sobremi');
-    
-    return true;
-}
-
-// Validar número de identificación
-function validarNumeroIdentificacion(campo) {
-    const valor = campo.value.trim();
-    const tipoIden = document.getElementById('tipoiden').value;
-    
-    if (!valor) {
-        mostrarErrorCampo(campo, 'El número de identificación no puede estar vacío');
-        return false;
-    }
-    
-    if (!/^\d{6,12}$/.test(valor)) {
-        mostrarErrorCampo(campo, 'El número de identificación debe contener entre 6 y 12 dígitos');
-        return false;
-    }
-    
-    // Validaciones específicas según tipo de documento
-    if (tipoIden === 'Cédula de Ciudadanía' && valor.length !== 10) {
-        mostrarErrorCampo(campo, 'La cédula de ciudadanía debe tener 10 dígitos');
-        return false;
-    }
-    
-    campo.classList.add('is-valid');
-    return true;
-}
-
-// Validar texto con API (simulada)
-async function validarTextoConAPI(texto, campo, tipo) {
-    try {
-        // Simular validación con API
-        // En un caso real, aquí haríamos una llamada a una API de validación de texto
-        const tieneSentido = !/(.)\1{4,}/.test(texto); // Verificar que no tenga muchas letras repetidas
-        
-        if (tieneSentido) {
-            campo.classList.add('is-valid');
-        } else {
-            mostrarErrorCampo(campo, 'El texto parece contener caracteres aleatorios sin sentido');
-        }
-    } catch (error) {
-        console.error('Error al validar texto:', error);
-        campo.classList.add('is-valid');
     }
 }
 
@@ -569,7 +283,27 @@ function agregarExperiencia() {
     
     container.appendChild(newItem);
     experienciasCount++;
+
+    const empresaInput = newItem.querySelector('.empresa');
+    const cargoInput = newItem.querySelector('.cargo');
+    const descripcionInput = newItem.querySelector('.descripcion');
     
+    if (empresaInput) {
+        empresaInput.addEventListener('blur', function() {
+            validarNombre(this);
+        });
+    }
+    if (cargoInput) {
+        cargoInput.addEventListener('blur', function() {
+            validarPuesto(this);
+        });
+    }
+    if (descripcionInput) {
+        descripcionInput.addEventListener('blur', function() {
+            validarDescripcionExperiencia(this);
+        });
+    }
+
     // Agregar evento al botón de eliminar
     const removeBtn = newItem.querySelector('.remove-experiencia');
     if (removeBtn) {
@@ -586,28 +320,6 @@ function agregarExperiencia() {
             validarDescripcionExperiencia(this);
         });
     }
-}
-
-// Validar descripción de experiencia
-function validarDescripcionExperiencia(campo) {
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-        mostrarErrorCampo(campo, 'La descripción no puede estar vacía');
-        return false;
-    }
-    
-    // Verificar mínimo de palabras
-    const palabras = valor.split(' ');
-    if (palabras.length < 15) {
-        mostrarErrorCampo(campo, 'La descripción debe tener al menos 15 palabras');
-        return false;
-    }
-    
-    // Validar con API de texto
-    validarTextoConAPI(valor, campo, 'experiencia');
-    
-    return true;
 }
 
 // Inicializar idiomas
@@ -718,7 +430,7 @@ function agregarReferencia() {
         </div>
         <div class="col-md-4">
             <label class="form-label">Teléfono</label>
-            <input type="text" class="form-control referencia-telefono" name="referenciaTelefono[]" placeholder="Teléfono de contacto" required>
+            <input type="text" class="form-control referencia-telefono" id="referenciaTelefono${referenciasCount}" name="referenciaTelefono[]" placeholder="Teléfono de contacto" required>
         </div>
         <div class="col-md-4">
             <label class="form-label">Profesión</label>
@@ -736,6 +448,31 @@ function agregarReferencia() {
     
     container.appendChild(newItem);
     referenciasCount++;
+
+    const nombreInput = newItem.querySelector('.referencia-nombre');
+    const profesionInput = newItem.querySelector('.referencia-profesion');
+    const emailInput = newItem.querySelector('.referencia-email');
+    const telefonoRef = newItem.querySelector('.referencia-telefono');
+    
+    if (emailInput) {
+        emailInput.addEventListener('blur', function() {
+            validarEmail(this);
+        });
+    }
+    if (nombreInput) {
+        nombreInput.addEventListener('blur', function() {
+            validarNombre(this);
+        });
+    }
+    if (profesionInput) {
+        profesionInput.addEventListener('blur', function() {
+            validarOcupacion(this);
+        });
+    }
+
+if (telefonoRef) {
+        inicializarTelefonoIntl(telefonoRef.id);
+    }
     
     // Agregar evento al botón de eliminar
     const removeBtn = newItem.querySelector('.remove-referencia');
@@ -762,7 +499,6 @@ function mostrarVistaPrevia() {
         // Buscar el CV seleccionado
         const selectedCv = cvDataList.find(cv => cv.id == selectedCvId);
         if (selectedCv) {
-            // Cargar la plantilla con los datos del CV seleccionado
             cargarPlantillaConDatos(selectedTemplate, selectedCv);
         }
     } else if (validarFormularioParaVistaPrevia()) {
@@ -795,7 +531,7 @@ function obtenerDatosFormulario() {
     return {
         nombre: document.getElementById("nombre").value,
         email: document.getElementById("email").value,
-        telefono: document.getElementById("codigoPais").value + document.getElementById("telefono").value,
+        telefono: obtenerTelefonoParaBackend(),
         tipoiden: document.getElementById("tipoiden").value,
         numeroiden: document.getElementById("numeroiden").value,
         fechanac: document.getElementById("fechanac").value,
@@ -819,7 +555,6 @@ function obtenerDatosFormulario() {
     };
 }
 
-// Obtener estudios en formato para base de datos
 function obtenerEstudios() {
     const niveles = document.querySelectorAll('.nivel-estudio');
     const titulos = document.querySelectorAll('.titulo-estudio');
@@ -828,15 +563,16 @@ function obtenerEstudios() {
     let estudios = [];
     
     for (let i = 0; i < niveles.length; i++) {
-        if (niveles[i].value && titulos[i].value && instituciones[i].value && anos[i].value) {
-            estudios.push(`${niveles[i].value},${titulos[i].value},${instituciones[i].value},${anos[i].value}`);
-        }
+        estudios.push([
+            niveles[i].value,
+            titulos[i].value,
+            instituciones[i].value,
+            anos[i].value
+        ].join(','));
     }
-    
-    return estudios.join('.');
+    return estudios.join(';');
 }
 
-// Obtener experiencias en formato para base de datos
 function obtenerExperiencias() {
     const empresas = document.querySelectorAll('.empresa');
     const tiempos = document.querySelectorAll('.tiempo');
@@ -845,30 +581,30 @@ function obtenerExperiencias() {
     let experiencias = [];
     
     for (let i = 0; i < empresas.length; i++) {
-        if (empresas[i].value && tiempos[i].value && cargos[i].value && descripciones[i].value) {
-            experiencias.push(`${empresas[i].value},${tiempos[i].value},${cargos[i].value},${descripciones[i].value}`);
-        }
+        experiencias.push([
+            empresas[i].value,
+            tiempos[i].value,
+            cargos[i].value,
+            descripciones[i].value
+        ].join(','));
     }
-    
-    return experiencias.join('.');
+    return experiencias.join(';');
 }
 
-// Obtener idiomas en formato para base de datos
 function obtenerIdiomas() {
     const idiomas = document.querySelectorAll('.idioma');
     const niveles = document.querySelectorAll('.nivel-idioma');
     let idiomasData = [];
     
     for (let i = 0; i < idiomas.length; i++) {
-        if (idiomas[i].value && niveles[i].value) {
-            idiomasData.push(`${idiomas[i].value},${niveles[i].value}`);
-        }
+        idiomasData.push([
+            idiomas[i].value,
+            niveles[i].value
+        ].join(','));
     }
-    
-    return idiomasData.join('.');
+    return idiomasData.join(';');
 }
 
-// Obtener referencias en formato para base de datos
 function obtenerReferencias() {
     const nombres = document.querySelectorAll('.referencia-nombre');
     const telefonos = document.querySelectorAll('.referencia-telefono');
@@ -877,17 +613,28 @@ function obtenerReferencias() {
     let referencias = [];
     
     for (let i = 0; i < nombres.length; i++) {
-        if (nombres[i].value && telefonos[i].value && profesiones[i].value && emails[i].value) {
-            referencias.push(`${nombres[i].value},${telefonos[i].value},${profesiones[i].value},${emails[i].value}`);
-        }
+        referencias.push([
+            nombres[i].value,
+            telefonos[i].value,
+            profesiones[i].value,
+            emails[i].value
+        ].join(','));
     }
-    
     const sinReferencias = document.getElementById('sin-referencias').checked;
     if (sinReferencias || referencias.length === 0) {
         return "No";
     }
-    
-    return referencias.join('.');
+    return referencias.join(';');
+}
+
+function calcularEdad(fecha) {
+    if (!fecha) return '';
+    const nacimiento = new Date(fecha);
+    const hoy = new Date();
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const m = hoy.getMonth() - nacimiento.getMonth();
+    if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
+    return edad;
 }
 
 // Cargar plantilla con datos específicos
@@ -936,92 +683,142 @@ function rellenarPlantillaAntigua(doc, data) {
     doc.getElementById('antigua-estado_civil').textContent = data.estadocivil || '';
     doc.getElementById('antigua-genero').textContent = data.genero || '';
     doc.getElementById('antigua-edad').textContent = calcularEdad(data.fechanac);
-    doc.getElementById('antigua-nivel_estudios').textContent = data.estudios || '';
-    doc.getElementById('antigua-idiomas').textContent = data.idiomas || '';
+
+    // Estudios: mostrar todos los títulos separados por coma
+    let estudiosNombres = '';
+    if (data.habilidades.educacion) {
+        estudiosNombres = data.habilidades.educacion.split(';').map(estudio => {
+            const partes = estudio.split(',');
+            return partes[1] || ''; // Título
+        }).filter(Boolean).join(', ');
+    }
+    doc.getElementById('antigua-nivel_estudios').textContent = estudiosNombres;
+
+    // Idiomas
+    let idiomasStr = '';
+    if (data.habilidades.idiomas) {
+        idiomasStr = data.habilidades.idiomas.split(';').map(idioma => {
+            const partes = idioma.split(',');
+            return partes[0] ? `${partes[0]} (${partes[1] || ''})` : '';
+        }).filter(Boolean).join(', ');
+    }
+    doc.getElementById('antigua-idiomas').textContent = idiomasStr;
+
     doc.getElementById('antigua-objetivo').textContent = data.objetivo || '';
+
     // Foto
     const fotoTd = doc.getElementById('antigua-foto');
     fotoTd.innerHTML = data.foto ? `<img src="${data.foto}" alt="Foto" style="width:100px;height:120px;">` : '';
+
     // Experiencia
     const expList = doc.getElementById('antigua-exp-list');
     expList.innerHTML = '';
-    if (data.experiencias && data.experiencias !== "No") {
-        data.experiencias.split('.').forEach(exp => {
-            const [empresa, tiempo, cargo] = exp.split(',');
+    if (data.habilidades.experiencia && data.habilidades.experiencia !== "No") {
+        data.habilidades.experiencia.split(';').forEach(exp => {
+            const partes = exp.split(',');
+            const empresa = partes[0] || '';
+            const tiempo = partes[1] || '';
+            const cargo = partes[2] || '';
             const li = doc.createElement('li');
-            li.innerHTML = `<span>${empresa || ''}</span><span>${tiempo || ''}</span><span>${cargo || ''}</span>`;
+            li.innerHTML = `<span>${empresa}</span><span>${tiempo}</span><span>${cargo}</span>`;
             expList.appendChild(li);
         });
     }
-}
-function calcularEdad(fecha) {
-    if (!fecha) return '';
-    const nacimiento = new Date(fecha);
-    const hoy = new Date();
-    let edad = hoy.getFullYear() - nacimiento.getFullYear();
-    const m = hoy.getMonth() - nacimiento.getMonth();
-    if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
-    return edad;
 }
 
 function rellenarPlantillaClasico(doc, data) {
     // Foto
     const fotoBox = doc.getElementById('clasico-foto');
-    fotoBox.innerHTML = data.foto ? `<img src="${data.foto}" alt="Foto" style="width:100%;height:100%;object-fit:cover;">` : '';
-    doc.getElementById('clasico-nombre').textContent = data.nombre || '';
-    doc.getElementById('clasico-documento').textContent = `${data.tipoiden || ''}: ${data.numeroiden || ''}`;
-    doc.getElementById('clasico-nacimiento').textContent = data.fechanac || '';
-    doc.getElementById('clasico-lugar').textContent = data.ciudad || '';
-    doc.getElementById('clasico-estado').textContent = data.estadocivil || '';
-    doc.getElementById('clasico-direccion').textContent = data.direccion || '';
-    doc.getElementById('clasico-celular').textContent = data.telefono || '';
-    doc.getElementById('clasico-email').textContent = data.email || '';
-    doc.getElementById('clasico-perfil').textContent = data.sobremi || '';
-    // Formación académica
-    doc.getElementById('clasico-profesional').textContent = '';
-    doc.getElementById('clasico-tecnico').textContent = '';
-    doc.getElementById('clasico-secundarios').textContent = '';
-    if (data.estudios) {
-        const estudios = data.estudios.split('.');
-        estudios.forEach(estudio => {
-            const [nivel, titulo, institucion, ano] = estudio.split(',');
-            if (nivel && nivel.toLowerCase().includes('profesional')) {
-                doc.getElementById('clasico-profesional').textContent = `${titulo || ''} - ${institucion || ''} - ${ano || ''}`;
-            } else if (nivel && nivel.toLowerCase().includes('técnico')) {
-                doc.getElementById('clasico-tecnico').textContent = `${titulo || ''} - ${institucion || ''} - ${ano || ''}`;
-            } else if (nivel && nivel.toLowerCase().includes('bachiller')) {
-                doc.getElementById('clasico-secundarios').textContent = `${titulo || ''} - ${institucion || ''} - ${ano || ''}`;
-            }
+    if (fotoBox) fotoBox.innerHTML = data.foto ? `<img src="${data.foto}" alt="Foto" style="width:100%;height:100%;object-fit:cover;">` : '';
+
+    // Nombre
+    if (doc.getElementById('clasico-nombre')) doc.getElementById('clasico-nombre').textContent = data.nombre || '';
+
+    // Información personal
+    if (doc.getElementById('clasico-documento')) doc.getElementById('clasico-documento').textContent = `${data.tipoiden || ''}: ${data.numeroiden || ''}`;
+    if (doc.getElementById('clasico-nacimiento')) doc.getElementById('clasico-nacimiento').textContent = data.fechanac || '';
+    if (doc.getElementById('clasico-lugar')) doc.getElementById('clasico-lugar').textContent = data.ciudad || '';
+    if (doc.getElementById('clasico-estado')) doc.getElementById('clasico-estado').textContent = data.estadocivil || '';
+    if (doc.getElementById('clasico-direccion')) doc.getElementById('clasico-direccion').textContent = data.direccion || '';
+    if (doc.getElementById('clasico-celular')) doc.getElementById('clasico-celular').textContent = data.telefono || '';
+    if (doc.getElementById('clasico-email')) doc.getElementById('clasico-email').textContent = data.email || '';
+
+    // Perfil (incluye habilidades)
+    let perfilText = (data.sobremi || data.perfil || '');
+    if (data.habilidades && data.habilidades.habilidad) {
+        perfilText += perfilText ? "\n\n" : "";
+        perfilText += "Habilidades: " + data.habilidades.habilidad;
+    }
+    if (doc.getElementById('clasico-perfil')) doc.getElementById('clasico-perfil').textContent = perfilText;
+
+    // Formación Académica
+    const eduDiv = doc.getElementById('clasico-educacion');
+    eduDiv.innerHTML = '';
+    if (data.habilidades.educacion) {
+        data.habilidades.educacion.split(';').forEach(estudio => {
+            const partes = estudio.split(',');
+            const titulo = partes[1] || '';
+            const institucion = partes[2] || '';
+            const ano = partes.slice(3).join(',') || '';
+            const eduItem = doc.createElement('div');
+            eduItem.className = 'education-item';
+            eduItem.innerHTML = `<p><strong>${titulo}</strong></p>
+                <p>${institucion} - ${ano}</p>`;
+            eduDiv.appendChild(eduItem);
         });
     }
-    // Experiencia laboral
+
+    // Experiencia Laboral
     const expDiv = doc.getElementById('clasico-experiencias');
-    expDiv.innerHTML = '';
-    if (data.experiencias && data.experiencias !== "No") {
-        data.experiencias.split('.').forEach(exp => {
-            const [empresa, tiempo, cargo, descripcion] = exp.split(',');
-            const jobDiv = doc.createElement('div');
-            jobDiv.className = 'job';
-            jobDiv.innerHTML = `<h3>${cargo || ''} | ${empresa || ''}</h3>
-                <p><strong>${tiempo || ''}</strong></p>
-                <p>${descripcion || ''}</p>`;
-            expDiv.appendChild(jobDiv);
-        });
+    if (expDiv) {
+        expDiv.innerHTML = '';
+        if (data.habilidades && data.habilidades.experiencia && data.habilidades.experiencia !== "No") {
+            data.habilidades.experiencia.split(';').forEach(exp => {
+                const partes = exp.split(',');
+                const empresa = partes[0] || '';
+                const tiempo = partes[1] || '';
+                const cargo = partes[2] || '';
+                const descripcion = partes.slice(3).join(',') || '';
+                const jobDiv = doc.createElement('div');
+                jobDiv.className = 'job';
+                jobDiv.innerHTML = `<h3>Cargo: ${cargo} | Empresa: ${empresa} | Tiempo: ${tiempo}</h3>
+                    <p><strong>Descripción del cargo</strong></p>
+                    <p>${descripcion}</p>`;
+                expDiv.appendChild(jobDiv);
+            });
+        }
     }
+
     // Referencias
     const refDiv = doc.getElementById('clasico-referencias');
-    refDiv.innerHTML = '';
-    if (data.referencias && data.referencias !== "No") {
-        data.referencias.split('.').forEach(ref => {
-            const [nombre, telefono, profesion, email] = ref.split(',');
-            const refItem = doc.createElement('div');
-            refItem.className = 'reference';
-            refItem.innerHTML = `<h3>${nombre || ''}</h3>
-                <p>${profesion || ''}</p>
-                <p>Teléfono: ${telefono || ''}</p>
-                <p>E-mail: ${email || ''}</p>`;
-            refDiv.appendChild(refItem);
-        });
+    if (refDiv) {
+        refDiv.innerHTML = '';
+        if (data.referencias && data.referencias !== "No") {
+            data.referencias.split(';').forEach(ref => {
+                const partes = ref.split(',');
+                const nombre = partes[0] || '';
+                const telefono = partes[1] || '';
+                const profesion = partes[2] || '';
+                const email = partes.slice(3).join(',') || '';
+                const refItem = doc.createElement('div');
+                refItem.className = 'reference';
+                refItem.innerHTML = `<strong>${nombre}</strong><br>
+                    <span>${profesion} / ${telefono}</span><br>
+                    <span>${email}</span>`;
+                refDiv.appendChild(refItem);
+            });
+        }
+    }
+
+    // Idiomas (agrega al final de la sección de formación académica)
+    if (data.habilidades && data.habilidades.idiomas) {
+        let idiomasHtml = "<div><strong>Idiomas:</strong> ";
+        idiomasHtml += data.habilidades.idiomas.split(';').map(idioma => {
+            const partes = idioma.split(',');
+            return partes[0] ? `${partes[0]} (${partes[1] || ''})` : '';
+        }).filter(Boolean).join(', ');
+        idiomasHtml += "</div>";
+        if (formacionSection) formacionSection.innerHTML += idiomasHtml;
     }
 }
 
@@ -1035,65 +832,84 @@ function rellenarPlantillaActual(doc, data) {
     doc.getElementById('actual-email').textContent = data.email || '';
     doc.getElementById('actual-identificacion').textContent = `${data.tipoiden || ''}: ${data.numeroiden || ''}`;
     doc.getElementById('actual-direccion').textContent = data.direccion || '';
-    doc.getElementById('actual-sobremi').textContent = data.sobremi || '';
+    doc.getElementById('actual-sobremi').textContent = data.perfil || '';
+
     // Experiencia
     const expDiv = doc.getElementById('actual-experiencias');
     expDiv.innerHTML = '';
-    if (data.experiencias && data.experiencias !== "No") {
-        data.experiencias.split('.').forEach(exp => {
-            const [empresa, tiempo, cargo, descripcion] = exp.split(',');
+    if (data.habilidades.experiencia && data.habilidades.experiencia !== "No") {
+        data.habilidades.experiencia.split(';').forEach(exp => {
+            const partes = exp.split(',');
+            const empresa = partes[0] || '';
+            const tiempo = partes[1] || '';
+            const cargo = partes[2] || '';
+            const descripcion = partes.slice(3).join(',') || '';
             const jobDiv = doc.createElement('div');
             jobDiv.className = 'job';
-            jobDiv.innerHTML = `<h3>${cargo || ''} | ${empresa || ''}</h3>
-                <p>${descripcion || ''}</p>`;
+            jobDiv.innerHTML = `<h3>${cargo} | ${empresa}</h3>
+                <p>${descripcion}</p>`;
             expDiv.appendChild(jobDiv);
         });
     }
+
     // Educación
     const eduDiv = doc.getElementById('actual-educacion');
     eduDiv.innerHTML = '';
-    if (data.estudios) {
-        data.estudios.split('.').forEach(estudio => {
-            const [nivel, titulo, institucion, ano] = estudio.split(',');
+    if (data.habilidades.educacion) {
+        data.habilidades.educacion.split(';').forEach(estudio => {
+            const partes = estudio.split(',');
+            const nivel = partes[0] || '';
+            const titulo = partes[1] || '';
+            const institucion = partes[2] || '';
+            const ano = partes.slice(3).join(',') || '';
             const eduItem = doc.createElement('div');
             eduItem.className = 'education-item';
-            eduItem.innerHTML = `<h3>${titulo || ''}</h3>
-                <p>${institucion || ''} - ${ano || ''}</p>`;
+            eduItem.innerHTML = `<h3>${titulo}</h3>
+                <p>${institucion} - ${ano}</p>`;
             eduDiv.appendChild(eduItem);
         });
     }
+
     // Habilidades
     const skillDiv = doc.getElementById('actual-habilidades');
     skillDiv.innerHTML = '';
-    if (data.habilidades && data.habilidades.habilidad) {
+    if (data.habilidades.habilidad && data.habilidades.habilidad) {
         data.habilidades.habilidad.split(',').forEach(skill => {
             const span = doc.createElement('span');
             span.textContent = skill.trim();
             skillDiv.appendChild(span);
         });
     }
+
     // Idiomas
     const idiomasDiv = doc.getElementById('actual-idiomas');
     idiomasDiv.innerHTML = '';
-    if (data.idiomas) {
-        data.idiomas.split('.').forEach(idioma => {
-            const [nombre, nivel] = idioma.split(',');
+    if (data.habilidades.idiomas) {
+        data.habilidades.idiomas.split(';').forEach(idioma => {
+            const partes = idioma.split(',');
+            const nombre = partes[0] || '';
+            const nivel = partes.slice(1).join(',') || '';
             const p = doc.createElement('p');
-            p.textContent = `${nombre || ''} - ${nivel || ''}`;
+            p.textContent = `${nombre} - ${nivel}`;
             idiomasDiv.appendChild(p);
         });
     }
+
     // Referencias
     const refDiv = doc.getElementById('actual-referencias');
     refDiv.innerHTML = '';
     if (data.referencias && data.referencias !== "No") {
-        data.referencias.split('.').forEach(ref => {
-            const [nombre, telefono, profesion, email] = ref.split(',');
+        data.referencias.split(';').forEach(ref => {
+            const partes = ref.split(',');
+            const nombre = partes[0] || '';
+            const telefono = partes[1] || '';
+            const profesion = partes[2] || '';
+            const email = partes.slice(3).join(',') || '';
             const refItem = doc.createElement('div');
             refItem.className = 'reference';
-            refItem.innerHTML = `<strong>${nombre || ''}</strong><br>
-                <span>${profesion || ''} / ${telefono || ''}</span><br>
-                <span>${email || ''}</span>`;
+            refItem.innerHTML = `<strong>${nombre}</strong><br>
+                <span>${profesion} / ${telefono}</span><br>
+                <span>${email}</span>`;
             refDiv.appendChild(refItem);
         });
     }
@@ -1158,14 +974,12 @@ async function cargarCodigosTelefonicos() {
             throw new Error('Columnas necesarias no encontradas en el CSV');
         }
         
-        // Procesar las líneas
         codigosTelefonicos = lineas.slice(1).map(linea => {
             const columnas = linea.split(',');
             // Manejar comillas en los valores
             const nombre = columnas[nombreIndex].replace(/"/g, '').trim();
             let phoneCode = columnas[phoneCodeIndex].replace(/"/g, '').trim();
             
-            // Limpiar y formatear el código telefónico
             phoneCode = phoneCode.replace(/\s/g, ''); // Eliminar espacios
             if (phoneCode && !phoneCode.startsWith('+')) {
                 phoneCode = '+' + phoneCode;
@@ -1173,109 +987,8 @@ async function cargarCodigosTelefonicos() {
             
             return { nombre, phoneCode };
         }).filter(pais => pais.phoneCode); // Filtrar países sin código
-        
-        llenarSelectCodigosPais();
     } catch (error) {
         console.error('Error al cargar códigos telefónicos:', error);
-        // Cargar códigos por defecto en caso de error
-        cargarCodigosPorDefecto();
-    }
-}
-
-// Llenar el select con los códigos telefónicos
-function llenarSelectCodigosPais() {
-    const select = document.getElementById('codigoPais');
-    if (!select) return;
-    
-    select.innerHTML = ''; // Limpiar opciones existentes
-    
-    // Ordenar alfabéticamente por nombre del país
-    codigosTelefonicos.sort((a, b) => a.nombre.localeCompare(b.nombre));
-    
-    // Agregar opción por defecto
-    const optionDefault = document.createElement('option');
-    optionDefault.value = '';
-    optionDefault.textContent = 'Seleccione código de país';
-    optionDefault.disabled = true;
-    optionDefault.selected = true;
-    select.appendChild(optionDefault);
-    
-    // Agregar opciones de países
-    codigosTelefonicos.forEach(pais => {
-        const option = document.createElement('option');
-        option.value = pais.phoneCode;
-        
-        // Obtener código de bandera (simulado)
-        const bandera = obtenerBanderaPorPais(pais.nombre);
-        option.textContent = `${bandera} ${pais.phoneCode} (${pais.nombre})`;
-        
-        // Seleccionar Colombia por defecto
-        if (pais.nombre === "Colombia") {
-            option.selected = true;
-        }
-        
-        select.appendChild(option);
-    });
-    
-    // Inicializar funcionalidad de teléfono después de cargar los códigos
-    inicializarTelefono();
-}
-
-// Función simulada para obtener banderas (en un caso real, usaría una API o un mapping)
-function obtenerBanderaPorPais(nombrePais) {
-    const banderas = {
-        "Colombia": "🇨🇴",
-        "Estados Unidos": "🇺🇸",
-        "México": "🇲🇽",
-        "España": "🇪🇸",
-        "Argentina": "🇦🇷",
-        "Brasil": "🇧🇷",
-        "Chile": "🇨🇱",
-        "Perú": "🇵🇪",
-        "Venezuela": "🇻🇪",
-        "Ecuador": "🇪🇨"
-    };
-    
-    return banderas[nombrePais] || "🇺🇳";
-}
-
-// Cargar códigos por defecto en caso de error
-function cargarCodigosPorDefecto() {
-    codigosTelefonicos = [
-        { nombre: "Colombia", phoneCode: "+57" },
-        { nombre: "Estados Unidos", phoneCode: "+1" },
-        { nombre: "México", phoneCode: "+52" },
-        { nombre: "España", phoneCode: "+34" },
-        { nombre: "Argentina", phoneCode: "+54" }
-    ];
-    
-    llenarSelectCodigosPais();
-}
-
-// Inicializar funcionalidad de teléfono
-function inicializarTelefono() {
-    const codigoPais = document.getElementById('codigoPais');
-    const telefono = document.getElementById('telefono');
-    
-    if (!codigoPais || !telefono) return;
-    
-    // Actualizar el placeholder según el código de país seleccionado
-    codigoPais.addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        const match = selectedOption.textContent.match(/\(([^)]+)\)/);
-        const countryName = match ? match[1] : '';
-        
-        // Establecer placeholder según el país
-        if (countryName === "Colombia") {
-            telefono.placeholder = '3001234567';
-        } else {
-            telefono.placeholder = 'Número de teléfono';
-        }
-    });
-    
-    // Disparar el evento change para establecer el placeholder inicial
-    if (codigoPais.value) {
-        codigoPais.dispatchEvent(new Event('change'));
     }
 }
 
@@ -1361,14 +1074,30 @@ function agregarEstudio() {
         </div>
         <div class="col-md-2">
             <div class="input-group">
-                <input type="number" class="form-control ano-estudio" name="anoEstudio[]" placeholder="Año" min="1950" max="2030">
+                <input type="number" class="form-control ano-estudio" name="anoEstudio[]" placeholder="Año" min="1965" max="2025">
+                <label class="form-label">&nbsp;</label>
                 <button type="button" class="btn btn-danger btn-sm remove-estudio"><i class="bi bi-dash"></i></button>
             </div>
+        </div>
         </div>
     `;
     
     container.appendChild(newItem);
     estudiosCount++;
+
+    const tituloInput = newItem.querySelector('.titulo-estudio');
+    const institucionInput = newItem.querySelector('.institucion-estudio');
+    
+    if (tituloInput) {
+        tituloInput.addEventListener('blur', function() {
+            validarTituloEstudio(this);
+        });
+    }
+    if (institucionInput) {
+        institucionInput.addEventListener('blur', function() {
+            validarInstitucionEstudio(this);
+        });
+    }
     
     // Agregar evento al botón de eliminar
     const removeBtn = newItem.querySelector('.remove-estudio');
@@ -1385,33 +1114,46 @@ function agregarEstudio() {
     }
 }
 
-    function validarTelefono(campo) {
-    const iti = window.intlTelInputGlobals.getInstance(campo);
-    campo.classList.remove('is-valid', 'is-invalid');
-    if (!campo.value.trim()) {
-        mostrarErrorCampo(campo, 'El teléfono no puede estar vacío');
-        return false;
+// Inicializar funcionalidad de teléfono internacional
+function inicializarTelefonoIntl(id) {
+    if (!id) id = 'telefono';
+    const input = document.getElementById(id);
+    if (!input) return;
+
+    if (!input.classList.contains('iti-initialized')) {
+        window.intlTelInput(input, {
+            initialCountry: "co",
+            preferredCountries: ["co", "us", "mx", "es", "ar", "gb", "de"],
+            geoIpLookup: function(callback) {
+                fetch("https://ipapi.co/json")
+                    .then(res => res.json())
+                    .then(data => callback(data.country_code))
+                    .catch(() => callback("us"));
+            },
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+        });
+        input.classList.add('iti-initialized');
     }
-    if (!iti.isValidNumber()) {
-        mostrarErrorCampo(campo, 'El número no es válido para el país seleccionado.');
-        return false;
+
+    input.addEventListener("blur", function() {
+    const iti = window.intlTelInputGlobals.getInstance(input);
+    if (iti.isValidNumber()) {
+        input.classList.add('is-valid');
+        input.classList.remove('is-invalid');
+    } else {
+        input.classList.add('is-invalid');
+        input.classList.remove('is-valid');
+        mostrarNotificacion("Número de teléfono no válido para el país seleccionado.", "error", 4);
     }
-    const tipo = iti.getNumberType();
-    if (tipo !== intlTelInputUtils.numberType.MOBILE && tipo !== intlTelInputUtils.numberType.FIXED_LINE_OR_MOBILE) {
-        mostrarErrorCampo(campo, 'El número debe ser móvil o fijo válido.');
-        return false;
-    }
-    campo.classList.add('is-valid');
-    return true;
+});
 }
 
 function obtenerTelefonoParaBackend() {
     const telefonoInput = document.getElementById('telefono');
     if (!telefonoInput) return '';
     const iti = window.intlTelInputGlobals.getInstance(telefonoInput);
-    return iti.getNumber(); // Devuelve el número en formato internacional (+57...)
+    return iti.getNumber();
 }
-
 
 // Guardar o actualizar CV
 async function guardarCV(e) {
@@ -1679,42 +1421,31 @@ function resetForm() {
 
 // Editar CV
 async function editarCV(id) {
+    console.log(cvDataList);
     try {
         const response = await fetch(`${API_URL}/${id}`);
         if (!response.ok) throw new Error("Error al cargar el CV");
         const cv = await response.json();
-
+        
         const cvIdInput = document.getElementById('cvId');
         if (cvIdInput) cvIdInput.value = cv.id;
         
         // Llenar campos básicos
         document.getElementById("nombre").value = cv.nombre || "";
         document.getElementById("email").value = cv.email || "";
-        
-        // Separar código de país y número de teléfono
+        // Establecer el teléfono en el input usando intl-tel-input
         if (cv.telefono) {
-            // Buscar el código de país en la lista
-            const codigoEncontrado = codigosTelefonicos.find(pais => 
-                cv.telefono.startsWith(pais.phoneCode)
-            );
-            
-            if (codigoEncontrado) {
-                document.getElementById("codigoPais").value = codigoEncontrado.phoneCode;
-                document.getElementById("telefono").value = cv.telefono.substring(codigoEncontrado.phoneCode.length);
+            const telefonoInput = document.getElementById("telefono");
+            if (telefonoInput) {
+            // Usar intl-tel-input para establecer el número completo
+            const iti = window.intlTelInputGlobals.getInstance(telefonoInput);
+            if (iti) {
+                iti.setNumber(cv.telefono);
             } else {
-                // Intentar detectar el código (para compatibilidad con datos existentes)
-                const codigoMatch = cv.telefono.match(/^\+\d+/);
-                if (codigoMatch) {
-                    document.getElementById("codigoPais").value = codigoMatch[0];
-                    document.getElementById("telefono").value = cv.telefono.substring(codigoMatch[0].length);
-                } else {
-                    // Si no tiene código, usar Colombia por defecto
-                    document.getElementById("codigoPais").value = "+57";
-                    document.getElementById("telefono").value = cv.telefono;
-                }
+                telefonoInput.value = cv.telefono;
+            }
             }
         }
-        
         document.getElementById("tipoiden").value = cv.tipoiden || "";
         document.getElementById("numeroiden").value = cv.numeroiden || "";
         document.getElementById("fechanac").value = cv.fechanac || "";
@@ -1726,36 +1457,36 @@ async function editarCV(id) {
         document.getElementById("puesto").value = cv.puesto || "";
         document.getElementById("pais").value = cv.nacionalidad || "";
         document.getElementById("objetivo").value = cv.objetivo || "";
-        document.getElementById("sobremi").value = cv.sobremi || "";
+        document.getElementById("sobremi").value = cv.perfil || "";
         
-        // Establecer habilidades
-        if (cv.habilidades) {
+        // Habilidades
+        if (cv.habilidades && cv.habilidades.habilidad) {
             const habilidades = cv.habilidades.habilidad.split(', ');
             const habilidadesSelect = document.getElementById('habilidades-select');
             Array.from(habilidadesSelect.options).forEach(option => {
                 option.selected = habilidades.includes(option.value);
             });
         }
-        
-        // Establecer estudios
-        if (cv.estudios) {
-            establecerEstudios(cv.estudios);
+
+        // Estudios
+        if (cv.habilidades && cv.habilidades.educacion) {
+            establecerEstudios(cv.habilidades.educacion);
         }
-        
-        // Establecer experiencias
-        if (cv.experiencias && cv.experiencias !== "No") {
-            establecerExperiencias(cv.experiencias);
+
+        // Experiencias
+        if (cv.habilidades && cv.habilidades.experiencia && cv.habilidades.experiencia !== "No") {
+            establecerExperiencias(cv.habilidades.experiencia);
         } else {
             document.getElementById('sin-experiencia').checked = true;
-            document.getElementById('objetivo_sin_experiencia').value = cv.objetivo || '';
+            document.getElementById('objetivo-sin-experiencia').value = cv.objetivo || '';
         }
-        
-        // Establecer idiomas
-        if (cv.idiomas) {
-            establecerIdiomas(cv.idiomas);
+
+        // Idiomas
+        if (cv.habilidades && cv.habilidades.idiomas) {
+            establecerIdiomas(cv.habilidades.idiomas);
         }
-        
-        // Establecer referencias
+
+        // Referencias
         if (cv.referencias && cv.referencias !== "No") {
             establecerReferencias(cv.referencias);
         } else {
@@ -1765,10 +1496,18 @@ async function editarCV(id) {
         // Establecer foto
         if (cv.foto) {
             const fotoPreview = document.querySelector('.foto-preview');
-            fotoPreview.src = cv.foto;
-            fotoPreview.style.display = 'block';
+            if (fotoPreview) {
+                fotoPreview.src = cv.foto;
+                fotoPreview.style.display = 'block';
+            }
+        } else {
+            const fotoPreview = document.querySelector('.foto-preview');
+            if (fotoPreview) {
+                fotoPreview.src = '';
+                fotoPreview.style.display = 'none';
+            }
         }
-        
+
         editando = true;
         const guardarBtn = document.getElementById("btnguardar");
         if (guardarBtn) guardarBtn.textContent = "Actualizar";
@@ -1784,122 +1523,105 @@ async function editarCV(id) {
     }
 }
 
-// Establecer estudios desde base de datos
 function establecerEstudios(estudiosStr) {
     if (!estudiosStr) return;
-    
-    const estudios = estudiosStr.split('.');
+    const estudios = estudiosStr.split(';');
     estudiosCount = 0;
     const container = document.getElementById('estudios-container');
     if (!container) return;
-    
     container.innerHTML = '';
-    
     estudios.forEach((estudio, index) => {
         if (index < MAX_ESTUDIOS) {
-            const [nivel, titulo, institucion, ano] = estudio.split(',');
+            const partes = estudio.split(',');
+            const nivel = partes[0] || '';
+            const titulo = partes[1] || '';
+            const institucion = partes[2] || '';
+            const ano = partes.slice(3).join(',') || '';
             agregarEstudio();
-            const nuevosEstudios = document.querySelectorAll('.estudio-item');
-            const lastEstudio = nuevosEstudios[nuevosEstudios.length - 1];
-            
-            if (lastEstudio) {
-                const nivelSelect = lastEstudio.querySelector('.nivel-estudio');
-                const tituloInput = lastEstudio.querySelector('.titulo-estudio');
-                const institucionInput = lastEstudio.querySelector('.institucion-estudio');
-                const anoInput = lastEstudio.querySelector('.ano-estudio');
-                
-                if (nivelSelect) nivelSelect.value = nivel;
-                if (tituloInput) tituloInput.value = titulo;
-                if (institucionInput) institucionInput.value = institucion;
-                if (anoInput) anoInput.value = ano;
+            const items = container.querySelectorAll('.estudio-item');
+            const item = items[index];
+            if (item) {
+                item.querySelector('.nivel-estudio').value = nivel;
+                item.querySelector('.titulo-estudio').value = titulo;
+                item.querySelector('.institucion-estudio').value = institucion;
+                item.querySelector('.ano-estudio').value = ano;
             }
         }
     });
 }
 
-// Establecer experiencias desde base de datos
 function establecerExperiencias(experienciasStr) {
     if (!experienciasStr) return;
-    
-    const experiencias = experienciasStr.split('.');
+    const experiencias = experienciasStr.split(';');
     experienciasCount = 0;
     const container = document.getElementById('experiencias-container');
     if (!container) return;
-    
     container.innerHTML = '';
-    
     experiencias.forEach((experiencia, index) => {
         if (index < MAX_EXPERIENCIAS) {
-            const [empresa, tiempo, cargo, descripcion] = experiencia.split(',');
+            const partes = experiencia.split(',');
+            const empresa = partes[0] || '';
+            const tiempo = partes[1] || '';
+            const cargo = partes[2] || '';
+            const descripcion = partes.slice(3).join(',') || '';
             agregarExperiencia();
-            const nuevasExperiencias = document.querySelectorAll('.experiencia-item');
-            const lastExperiencia = nuevasExperiencias[nuevasExperiencias.length - 1];
-            
-            if (lastExperiencia) {
-                const empresaInput = lastExperiencia.querySelector('.empresa');
-                const tiempoInput = lastExperiencia.querySelector('.tiempo');
-                const cargoInput = lastExperiencia.querySelector('.cargo');
-                const descripcionInput = lastExperiencia.querySelector('.descripcion');
-                
-                if (empresaInput) empresaInput.value = empresa;
-                if (tiempoInput) tiempoInput.value = tiempo;
-                if (cargoInput) cargoInput.value = cargo;
-                if (descripcionInput) descripcionInput.value = descripcion;
+            const items = container.querySelectorAll('.experiencia-item');
+            const item = items[index];
+            if (item) {
+                item.querySelector('.empresa').value = empresa;
+                item.querySelector('.tiempo').value = tiempo;
+                item.querySelector('.cargo').value = cargo;
+                item.querySelector('.descripcion').value = descripcion;
             }
         }
     });
 }
 
-// Establecer idiomas desde base de datos
 function establecerIdiomas(idiomasStr) {
     if (!idiomasStr) return;
-    const idiomas = idiomasStr.split('.');
+    const idiomas = idiomasStr.split(';');
     idiomasCount = 0;
     const container = document.getElementById('idiomas-container');
     if (!container) return;
     container.innerHTML = '';
     idiomas.forEach((idioma, index) => {
         if (index < MAX_IDIOMAS) {
-            const [nombre, nivel] = idioma.split(',');
+            const partes = idioma.split(',');
+            const nombre = partes[0] || '';
+            const nivel = partes.slice(1).join(',') || '';
             agregarIdioma();
             const items = container.querySelectorAll('.idioma-item');
             const item = items[index];
             if (item) {
-                item.querySelector('.idioma').value = nombre || '';
-                item.querySelector('.nivel-idioma').value = nivel || '';
+                item.querySelector('.idioma').value = nombre;
+                item.querySelector('.nivel-idioma').value = nivel;
             }
         }
     });
 }
 
-// Establecer referencias desde base de datos
 function establecerReferencias(referenciasStr) {
     if (!referenciasStr || referenciasStr === "No") return;
-    
-    const referencias = referenciasStr.split('.');
+    const referencias = referenciasStr.split(';');
     referenciasCount = 0;
     const container = document.getElementById('referencias-container');
     if (!container) return;
-    
     container.innerHTML = '';
-    
     referencias.forEach((referencia, index) => {
         if (index < MAX_REFERENCIAS) {
-            const [nombre, telefono, profesion, email] = referencia.split(',');
+            const partes = referencia.split(',');
+            const nombre = partes[0] || '';
+            const telefono = partes[1] || '';
+            const profesion = partes[2] || '';
+            const email = partes.slice(3).join(',') || '';
             agregarReferencia();
-            const nuevasReferencias = document.querySelectorAll('.referencia-item');
-            const lastReferencia = nuevasReferencias[nuevasReferencias.length - 1];
-            
-            if (lastReferencia) {
-                const nombreInput = lastReferencia.querySelector('.referencia-nombre');
-                const telefonoInput = lastReferencia.querySelector('.referencia-telefono');
-                const profesionInput = lastReferencia.querySelector('.referencia-profesion');
-                const emailInput = lastReferencia.querySelector('.referencia-email');
-                
-                if (nombreInput) nombreInput.value = nombre;
-                if (telefonoInput) telefonoInput.value = telefono;
-                if (profesionInput) profesionInput.value = profesion;
-                if (emailInput) emailInput.value = email;
+            const items = container.querySelectorAll('.referencia-item');
+            const item = items[index];
+            if (item) {
+                item.querySelector('.referencia-nombre').value = nombre;
+                item.querySelector('.referencia-telefono').value = telefono;
+                item.querySelector('.referencia-profesion').value = profesion;
+                item.querySelector('.referencia-email').value = email;
             }
         }
     });
@@ -1959,3 +1681,4 @@ function llenarDatalist(datalistId, opciones) {
         datalist.appendChild(option);
     });
 }
+
