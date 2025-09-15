@@ -26,15 +26,15 @@
                 <h2>Seleccione formato de CV</h2>
                 
                 <div class="options">
-                    <div class="option" data-template="plantilla_antigua.html">
+                    <div class="option" id="plantilla" data-template="plantilla_antigua.html">
                         <img src="recursos/antiguo.jpg" alt="Plantilla Antigua">
                         <p>Formato Antiguo</p>
                     </div>
-                    <div class="option" data-template="plantilla_clasico.html">
+                    <div class="option" id="plantilla" data-template="plantilla_clasico.html">
                         <img src="recursos/clasico.jpg" alt="Plantilla Clásico">
                         <p>Formato Clásico</p>
                     </div>
-                    <div class="option" data-template="plantilla_actual.html">
+                    <div class="option" id="plantilla" data-template="plantilla_actual.html">
                         <img src="recursos/actual.jpg" alt="Plantilla Actual">
                         <p>Formato Actual</p>
                     </div>
@@ -110,7 +110,7 @@
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <label for="email" class="form-label required">Email</label>
-                                                    <input type="email" class="form-control" id="email" placeholder="Ej: maria.gonzalez@email.com" required>
+                                                    <input type="email" class="form-control" id="emailPrincipal" placeholder="Ej: maria.gonzalez@email.com" required>
                                                     <div class="invalid-feedback">
                                                         El correo debe tener un formato válido y terminar en .com, .co, .org o .gov.
                                                     </div>
@@ -395,24 +395,26 @@
                                     <div id="skillsInfo" class="accordion-collapse collapse" data-bs-parent="#formAccordion">
                                         <div class="accordion-body">
                                             <div class="mb-3">
-                                                <label for="habilidad" class="form-label required">Habilidades Técnicas</label>
-                                                <select class="form-select" id="habilidades-select" multiple>
-                                                    <option value="JavaScript">JavaScript</option>
-                                                    <option value="HTML">HTML</option>
-                                                    <option value="CSS">CSS</option>
-                                                    <option value="React">React</option>
-                                                    <option value="Node.js">Node.js</option>
-                                                    <option value="Python">Python</option>
-                                                    <option value="Java">Java</option>
-                                                    <option value="SQL">SQL</option>
-                                                    <option value="Git">Git</option>
-                                                    <option value="AWS">AWS</option>
-                                                    <!-- Más opciones -->
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Seleccione al menos una habilidad.
+                                                <label class="form-label required">Habilidades Técnicas</label>
+                                                <div class="select-container">
+                                                    <div class="select-header">
+                                                        <span>Selecciona tus habilidades</span>
+                                                        <i class="bi bi-chevron-down"></i>
+                                                    </div>
+                                                    <div class="options-container">
+                                                        <div class="search-box">
+                                                            <i class="bi bi-search"></i>
+                                                            <input type="text" placeholder="Buscar habilidades..." class="search-input">
+                                                        </div>
+                                                        <div class="options-list">
+
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <small class="form-text text-muted">Mantenga presionada la tecla Ctrl para seleccionar múltiples opciones.</small>
+                                                <div class="selected-skills mt-2" id="selectedSkillsContainer">
+                                                    <div class="no-selection">No hay habilidades seleccionadas</div>
+                                                </div>
+                                                <div class="invalid-feedback">Seleccione al menos una habilidad.</div>
                                             </div>
                                         </div>
                                     </div>
@@ -430,18 +432,9 @@
                                             <div id="idiomas-container">
                                                 <div class="idioma-item row g-2 mb-2">
                                                     <div class="col-md-5">
-                                                        <select class="form-select idioma" name="idioma[]">
+                                                        <select class="form-select idioma" name="idioma[]" id="idioma-select">
                                                             <option value="" disabled selected>Seleccione idioma</option>
-                                                            <option value="Español">Español</option>
-                                                            <option value="Inglés">Inglés</option>
-                                                            <option value="Francés">Francés</option>
-                                                            <option value="Alemán">Alemán</option>
-                                                            <option value="Italiano">Italiano</option>
-                                                            <option value="Portugués">Portugués</option>
-                                                            <option value="Chino">Chino</option>
-                                                            <option value="Japonés">Japonés</option>
-                                                            <option value="Ruso">Ruso</option>
-                                                            <option value="Árabe">Árabe</option>
+                                                            
                                                         </select>
                                                     </div>
                                                     <div class="col-md-5">

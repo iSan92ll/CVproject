@@ -15,6 +15,8 @@ const MAX_IDIOMAS = 5;
 const API_URL = "http://localhost:8080/api/cv";
 let editando = false;
 let cropper;
+let allSkills = [];
+let selectedSkills = new Set();
 
 function mostrarNotificacion(mensaje, tipo = 'success', tiempo = 5) {
     alertify.dismissAll();
@@ -48,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     inicializarSelectorPlantillas();
     inicializarEventosBotones();
     inicializarTelefonoIntl();
+    initHabilidadesSelector();
 
     const telefonoInput = document.getElementById('telefono');
     if (telefonoInput) {
@@ -90,6 +93,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Inicializar manejo de imagen
     inicializarManejoImagen();
+
+    // Inicializar idiomas
+    cargarIdiomas();
+
+    
+    const emailPrincipal = document.getElementById('emailPrincipal');
+    if (emailPrincipal) {
+        emailPrincipal.addEventListener('blur', function() {
+            validarEmail(this);
+        });
+    }
 });
 
 // Cargar ciudades de Colombia desde el CSV
@@ -453,7 +467,6 @@ function agregarReferencia() {
     const profesionInput = newItem.querySelector('.referencia-profesion');
     const emailInput = newItem.querySelector('.referencia-email');
     const telefonoRef = newItem.querySelector('.referencia-telefono');
-    
     if (emailInput) {
         emailInput.addEventListener('blur', function() {
             validarEmail(this);
@@ -525,12 +538,12 @@ function obtenerDatosFormulario() {
     const referencias = obtenerReferencias();
     
     // Obtener habilidades seleccionadas
-    const habilidadesSelect = document.getElementById('habilidades-select');
-    const habilidades = Array.from(habilidadesSelect.selectedOptions).map(opt => opt.value).join(', ');
-    
+    const habilidadesraw = getSelectedHabilidades();
+    const habilidades = habilidadesraw.map(h => h.name).join(', ');
+
     return {
         nombre: document.getElementById("nombre").value,
-        email: document.getElementById("email").value,
+        email: document.getElementById("emailPrincipal").value,
         telefono: obtenerTelefonoParaBackend(),
         tipoiden: document.getElementById("tipoiden").value,
         numeroiden: document.getElementById("numeroiden").value,
@@ -1169,8 +1182,8 @@ async function guardarCV(e) {
     const telefono = obtenerTelefonoParaBackend();
     
     // Obtener habilidades seleccionadas
-    const habilidadesSelect = document.getElementById('habilidades-select');
-    const habilidades = Array.from(habilidadesSelect.selectedOptions).map(opt => opt.value).join(', ');
+    const habilidadesraw = getSelectedHabilidades();
+    const habilidades = habilidadesraw.map(h => h.name).join(', ');
 
     // Obtener foto
     const fotoPreview = document.querySelector('.foto-preview');
@@ -1209,7 +1222,7 @@ async function guardarCV(e) {
     // Preparar datos para enviar
     const cvData = {
         nombre: document.getElementById("nombre").value,
-        email: document.getElementById("email").value,
+        email: document.getElementById("emailPrincipal").value,
         telefono: telefono,
         tipoiden: document.getElementById("tipoiden").value,
         numeroiden: document.getElementById("numeroiden").value,
@@ -1432,7 +1445,7 @@ async function editarCV(id) {
         
         // Llenar campos básicos
         document.getElementById("nombre").value = cv.nombre || "";
-        document.getElementById("email").value = cv.email || "";
+        document.getElementById("emailPrincipal").value = cv.email || "";
         // Establecer el teléfono en el input usando intl-tel-input
         if (cv.telefono) {
             const telefonoInput = document.getElementById("telefono");
@@ -1461,11 +1474,19 @@ async function editarCV(id) {
         
         // Habilidades
         if (cv.habilidades && cv.habilidades.habilidad) {
-            const habilidades = cv.habilidades.habilidad.split(', ');
-            const habilidadesSelect = document.getElementById('habilidades-select');
-            Array.from(habilidadesSelect.options).forEach(option => {
-                option.selected = habilidades.includes(option.value);
+            // Para el nuevo selector de habilidades
+            selectedSkills = new Set();
+            const habilidadesNames = cv.habilidades.habilidad.split(', ');
+            
+            habilidadesNames.forEach(skillName => {
+                const skill = allSkills.find(s => s.name === skillName);
+                if (skill) {
+                    selectedSkills.add(skill.id);
+                }
             });
+            
+            updateSelectedHabilidades();
+            renderHabilidadesOptions();
         }
 
         // Estudios
@@ -1682,3 +1703,186 @@ function llenarDatalist(datalistId, opciones) {
     });
 }
 
+// Inicializar el selector de habilidades
+function initHabilidadesSelector() {
+    const selectHeader = document.querySelector('.select-header');
+    const optionsContainer = document.querySelector('.options-container');
+    const searchInput = document.querySelector('.search-input');
+    const optionsList = document.querySelector('.options-list');
+    const selectedSkillsContainer = document.getElementById('selectedSkillsContainer');
+    
+    // Cargar habilidades desde la API
+    cargarHabilidadesDesdeAPI();
+    
+    // Event listeners
+    selectHeader.addEventListener('click', function() {
+        this.classList.toggle('open');
+        optionsContainer.classList.toggle('open');
+    });
+    
+    searchInput.addEventListener('input', function() {
+        filterHabilidades(this.value);
+    });
+    
+    // Cerrar el dropdown al hacer clic fuera
+    document.addEventListener('click', function(e) {
+        if (!selectHeader.contains(e.target) && !optionsContainer.contains(e.target)) {
+            selectHeader.classList.remove('open');
+            optionsContainer.classList.remove('open');
+        }
+    });
+    
+    // Cargar habilidades seleccionadas si estamos editando
+    if (window.editingPerson) {
+        loadSelectedHabilidades();
+    }
+}
+
+// Cargar habilidades desde la API
+async function cargarHabilidadesDesdeAPI() {
+    try {
+        const response = await fetch("recursos/skills_dataset.json");
+        const data = await response.json();
+        allSkills = data.map(skill => ({
+            id: skill.id,
+            name: skill.name,
+            category: skill.category || 'General',
+            count: 0
+        }));
+        renderHabilidadesOptions();
+    } catch (error) {
+        console.error("Error al cargar habilidades:", error);
+        mostrarNotificacion("Error al cargar habilidades. Usando lista local.", "error", 3);
+    }
+}
+
+// Renderizar opciones de habilidades
+function renderHabilidadesOptions(filterTerm = '') {
+    const skillsByCategory = {};
+    allSkills.forEach(skill => {
+        if (filterTerm && !skill.name.toLowerCase().includes(filterTerm.toLowerCase()) && 
+        !skill.category.toLowerCase().includes(filterTerm.toLowerCase())) {
+            return;
+        }
+        
+        if (!skillsByCategory[skill.category]) {
+            skillsByCategory[skill.category] = [];
+        }
+        skillsByCategory[skill.category].push(skill);
+    });
+    
+    // Generar HTML
+    let html = '';
+    for (const category in skillsByCategory) {
+        html += `<div class="category">${category}</div>`;
+        skillsByCategory[category].forEach(skill => {
+            const isChecked = selectedSkills.has(skill.id) ? 'checked' : '';
+            html += `
+            <label class="option">
+            <input type="checkbox" value="${skill.id}" ${isChecked}>
+            ${skill.name}
+            </label>
+            `;
+        });
+    }
+
+    optionsList = document.querySelector('.options-list');
+    optionsList.innerHTML = html;
+
+    document.querySelectorAll('.option input').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                selectedSkills.add(this.value);
+            } else {
+                selectedSkills.delete(this.value);
+            }
+            updateSelectedHabilidades();
+        });
+    });
+}
+
+// Filtrar habilidades
+function filterHabilidades(searchTerm) {
+    renderHabilidadesOptions(searchTerm);
+}
+
+// Actualizar la visualización de habilidades seleccionadas
+function updateSelectedHabilidades() {
+    const selectedSkillsContainer = document.getElementById('selectedSkillsContainer');
+    
+    if (selectedSkills.size === 0) {
+        selectedSkillsContainer.innerHTML = '<div class="no-selection">No hay habilidades seleccionadas</div>';
+        return;
+    }
+    
+    selectedSkillsContainer.innerHTML = '';
+    selectedSkills.forEach(skillId => {
+        const skill = allSkills.find(skill => skill.id === skillId);
+        if (skill) {
+            const skillElement = document.createElement('div');
+            skillElement.className = 'selected-skill';
+            skillElement.innerHTML = `
+                ${skill.name} <i class="bi bi-x" data-id="${skill.id}"></i>
+            `;
+            selectedSkillsContainer.appendChild(skillElement);
+        }
+    });
+    
+    // Añadir event listeners para eliminar
+    document.querySelectorAll('.selected-skill i').forEach(icon => {
+        icon.addEventListener('click', function() {
+            const skillId = this.getAttribute('data-id');
+            selectedSkills.delete(skillId);
+            updateSelectedHabilidades();
+            renderHabilidadesOptions(document.querySelector('.search-input').value);
+        });
+    });
+}
+
+// Cargar habilidades seleccionadas al editar
+function loadSelectedHabilidades() {
+    if (window.editingPerson && window.editingPerson.habilidades) {
+        selectedSkills = new Set(window.editingPerson.habilidades.map(h => h.id));
+        updateSelectedHabilidades();
+    }
+}
+
+// Obtener habilidades seleccionadas para guardar en el formulario
+function getSelectedHabilidades() {
+    return Array.from(selectedSkills).map(skillId => {
+        const skill = allSkills.find(s => s.id === skillId);
+        return { id: skill.id, name: skill.name };
+    });
+}
+
+// Validar que se hayan seleccionado habilidades
+function validateHabilidades() {
+    const isValid = selectedSkills.size > 0;
+    const feedbackElement = document.querySelector('#skillsInfo .invalid-feedback');
+    
+    if (!isValid) {
+        feedbackElement.style.display = 'block';
+    } else {
+        feedbackElement.style.display = 'none';
+    }
+    
+    return isValid;
+}
+
+async function cargarIdiomas() {
+    try {
+        const response = await fetch("recursos/idiomas.json");
+        const idiomas = await response.json();
+
+        const select = document.getElementById("idioma-select");
+
+        idiomas.forEach(lang => {
+            const option = document.createElement("option");
+            option.value = lang.name;
+            option.textContent = lang.name;
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar idiomas:", error);
+    }
+}

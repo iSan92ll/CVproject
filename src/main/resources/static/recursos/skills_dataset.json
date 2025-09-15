@@ -1,0 +1,1152 @@
+[
+  {
+    "id": "1",
+    "name": "JavaScript",
+    "category": "Tecnología"
+  },
+  {
+    "id": "2",
+    "name": "Python",
+    "category": "Tecnología"
+  },
+  {
+    "id": "3",
+    "name": "Java",
+    "category": "Tecnología"
+  },
+  {
+    "id": "4",
+    "name": "C#",
+    "category": "Tecnología"
+  },
+  {
+    "id": "5",
+    "name": "C++",
+    "category": "Tecnología"
+  },
+  {
+    "id": "6",
+    "name": "SQL",
+    "category": "Tecnología"
+  },
+  {
+    "id": "7",
+    "name": "HTML",
+    "category": "Tecnología"
+  },
+  {
+    "id": "8",
+    "name": "CSS",
+    "category": "Tecnología"
+  },
+  {
+    "id": "9",
+    "name": "React",
+    "category": "Tecnología"
+  },
+  {
+    "id": "10",
+    "name": "Angular",
+    "category": "Tecnología"
+  },
+  {
+    "id": "11",
+    "name": "Vue.js",
+    "category": "Tecnología"
+  },
+  {
+    "id": "12",
+    "name": "Node.js",
+    "category": "Tecnología"
+  },
+  {
+    "id": "13",
+    "name": "PHP",
+    "category": "Tecnología"
+  },
+  {
+    "id": "14",
+    "name": "Ruby",
+    "category": "Tecnología"
+  },
+  {
+    "id": "15",
+    "name": "Go",
+    "category": "Tecnología"
+  },
+  {
+    "id": "16",
+    "name": "Kotlin",
+    "category": "Tecnología"
+  },
+  {
+    "id": "17",
+    "name": "Swift",
+    "category": "Tecnología"
+  },
+  {
+    "id": "18",
+    "name": "Flutter",
+    "category": "Tecnología"
+  },
+  {
+    "id": "19",
+    "name": "Django",
+    "category": "Tecnología"
+  },
+  {
+    "id": "20",
+    "name": "Spring Boot",
+    "category": "Tecnología"
+  },
+  {
+    "id": "21",
+    "name": "TensorFlow",
+    "category": "Tecnología"
+  },
+  {
+    "id": "22",
+    "name": "PyTorch",
+    "category": "Tecnología"
+  },
+  {
+    "id": "23",
+    "name": "Machine Learning",
+    "category": "Tecnología"
+  },
+  {
+    "id": "24",
+    "name": "Data Science",
+    "category": "Tecnología"
+  },
+  {
+    "id": "25",
+    "name": "Big Data",
+    "category": "Tecnología"
+  },
+  {
+    "id": "26",
+    "name": "NoSQL",
+    "category": "Tecnología"
+  },
+  {
+    "id": "27",
+    "name": "MongoDB",
+    "category": "Tecnología"
+  },
+  {
+    "id": "28",
+    "name": "PostgreSQL",
+    "category": "Tecnología"
+  },
+  {
+    "id": "29",
+    "name": "MySQL",
+    "category": "Tecnología"
+  },
+  {
+    "id": "30",
+    "name": "Docker",
+    "category": "Tecnología"
+  },
+  {
+    "id": "31",
+    "name": "Kubernetes",
+    "category": "Tecnología"
+  },
+  {
+    "id": "32",
+    "name": "Cloud Computing",
+    "category": "Tecnología"
+  },
+  {
+    "id": "33",
+    "name": "AWS",
+    "category": "Tecnología"
+  },
+  {
+    "id": "34",
+    "name": "Azure",
+    "category": "Tecnología"
+  },
+  {
+    "id": "35",
+    "name": "Google Cloud",
+    "category": "Tecnología"
+  },
+  {
+    "id": "36",
+    "name": "Linux",
+    "category": "Tecnología"
+  },
+  {
+    "id": "37",
+    "name": "Windows Server",
+    "category": "Tecnología"
+  },
+  {
+    "id": "38",
+    "name": "Networking",
+    "category": "Tecnología"
+  },
+  {
+    "id": "39",
+    "name": "Cybersecurity",
+    "category": "Tecnología"
+  },
+  {
+    "id": "40",
+    "name": "DevOps",
+    "category": "Tecnología"
+  },
+  {
+    "id": "41",
+    "name": "Gestión de proyectos",
+    "category": "Administración"
+  },
+  {
+    "id": "42",
+    "name": "Planificación estratégica",
+    "category": "Administración"
+  },
+  {
+    "id": "43",
+    "name": "Control de inventarios",
+    "category": "Administración"
+  },
+  {
+    "id": "44",
+    "name": "Gestión de calidad",
+    "category": "Administración"
+  },
+  {
+    "id": "45",
+    "name": "Administración financiera",
+    "category": "Administración"
+  },
+  {
+    "id": "46",
+    "name": "Gestión de recursos humanos",
+    "category": "Administración"
+  },
+  {
+    "id": "47",
+    "name": "Negociación",
+    "category": "Administración"
+  },
+  {
+    "id": "48",
+    "name": "Liderazgo",
+    "category": "Administración"
+  },
+  {
+    "id": "49",
+    "name": "Gestión del tiempo",
+    "category": "Administración"
+  },
+  {
+    "id": "50",
+    "name": "Resolución de conflictos",
+    "category": "Administración"
+  },
+  {
+    "id": "51",
+    "name": "Gestión de riesgos",
+    "category": "Administración"
+  },
+  {
+    "id": "52",
+    "name": "Planificación de presupuestos",
+    "category": "Administración"
+  },
+  {
+    "id": "53",
+    "name": "Gestión de operaciones",
+    "category": "Administración"
+  },
+  {
+    "id": "54",
+    "name": "Trabajo en equipo",
+    "category": "Administración"
+  },
+  {
+    "id": "55",
+    "name": "Comunicación organizacional",
+    "category": "Administración"
+  },
+  {
+    "id": "56",
+    "name": "Atención al cliente",
+    "category": "Administración"
+  },
+  {
+    "id": "57",
+    "name": "Gestión documental",
+    "category": "Administración"
+  },
+  {
+    "id": "58",
+    "name": "Gestión de compras",
+    "category": "Administración"
+  },
+  {
+    "id": "59",
+    "name": "Gestión de contratos",
+    "category": "Administración"
+  },
+  {
+    "id": "60",
+    "name": "Gestión de ventas",
+    "category": "Administración"
+  },
+  {
+    "id": "61",
+    "name": "Atención de pacientes",
+    "category": "Salud"
+  },
+  {
+    "id": "62",
+    "name": "Toma de signos vitales",
+    "category": "Salud"
+  },
+  {
+    "id": "63",
+    "name": "Primeros auxilios",
+    "category": "Salud"
+  },
+  {
+    "id": "64",
+    "name": "Farmacología básica",
+    "category": "Salud"
+  },
+  {
+    "id": "65",
+    "name": "Cirugía asistida",
+    "category": "Salud"
+  },
+  {
+    "id": "66",
+    "name": "Radiología",
+    "category": "Salud"
+  },
+  {
+    "id": "67",
+    "name": "Laboratorio clínico",
+    "category": "Salud"
+  },
+  {
+    "id": "68",
+    "name": "Enfermería pediátrica",
+    "category": "Salud"
+  },
+  {
+    "id": "69",
+    "name": "Ginecología",
+    "category": "Salud"
+  },
+  {
+    "id": "70",
+    "name": "Medicina interna",
+    "category": "Salud"
+  },
+  {
+    "id": "71",
+    "name": "Nutrición",
+    "category": "Salud"
+  },
+  {
+    "id": "72",
+    "name": "Fisioterapia",
+    "category": "Salud"
+  },
+  {
+    "id": "73",
+    "name": "Terapia ocupacional",
+    "category": "Salud"
+  },
+  {
+    "id": "74",
+    "name": "Psicología clínica",
+    "category": "Salud"
+  },
+  {
+    "id": "75",
+    "name": "Psiquiatría",
+    "category": "Salud"
+  },
+  {
+    "id": "76",
+    "name": "Odontología general",
+    "category": "Salud"
+  },
+  {
+    "id": "77",
+    "name": "Ortodoncia",
+    "category": "Salud"
+  },
+  {
+    "id": "78",
+    "name": "Oftalmología",
+    "category": "Salud"
+  },
+  {
+    "id": "79",
+    "name": "Veterinaria",
+    "category": "Salud"
+  },
+  {
+    "id": "80",
+    "name": "Rehabilitación física",
+    "category": "Salud"
+  },
+  {
+    "id": "81",
+    "name": "Pedagogía",
+    "category": "Educación"
+  },
+  {
+    "id": "82",
+    "name": "Diseño curricular",
+    "category": "Educación"
+  },
+  {
+    "id": "83",
+    "name": "Didáctica",
+    "category": "Educación"
+  },
+  {
+    "id": "84",
+    "name": "Evaluación educativa",
+    "category": "Educación"
+  },
+  {
+    "id": "85",
+    "name": "Orientación académica",
+    "category": "Educación"
+  },
+  {
+    "id": "86",
+    "name": "Tutores virtuales",
+    "category": "Educación"
+  },
+  {
+    "id": "87",
+    "name": "Enseñanza de matemáticas",
+    "category": "Educación"
+  },
+  {
+    "id": "88",
+    "name": "Enseñanza de ciencias",
+    "category": "Educación"
+  },
+  {
+    "id": "89",
+    "name": "Enseñanza de idiomas",
+    "category": "Educación"
+  },
+  {
+    "id": "90",
+    "name": "Enseñanza de historia",
+    "category": "Educación"
+  },
+  {
+    "id": "91",
+    "name": "Psicopedagogía",
+    "category": "Educación"
+  },
+  {
+    "id": "92",
+    "name": "Educación inclusiva",
+    "category": "Educación"
+  },
+  {
+    "id": "93",
+    "name": "Educación infantil",
+    "category": "Educación"
+  },
+  {
+    "id": "94",
+    "name": "Educación primaria",
+    "category": "Educación"
+  },
+  {
+    "id": "95",
+    "name": "Educación secundaria",
+    "category": "Educación"
+  },
+  {
+    "id": "96",
+    "name": "Educación superior",
+    "category": "Educación"
+  },
+  {
+    "id": "97",
+    "name": "Capacitación laboral",
+    "category": "Educación"
+  },
+  {
+    "id": "98",
+    "name": "Uso de TIC en educación",
+    "category": "Educación"
+  },
+  {
+    "id": "99",
+    "name": "Gamificación",
+    "category": "Educación"
+  },
+  {
+    "id": "100",
+    "name": "Educación a distancia",
+    "category": "Educación"
+  },
+  {
+    "id": "101",
+    "name": "Diseño gráfico",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "102",
+    "name": "Photoshop",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "103",
+    "name": "Illustrator",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "104",
+    "name": "InDesign",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "105",
+    "name": "Diseño UX/UI",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "106",
+    "name": "Diseño de interiores",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "107",
+    "name": "Arquitectura",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "108",
+    "name": "Modelado 3D",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "109",
+    "name": "Animación digital",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "110",
+    "name": "Edición de video",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "111",
+    "name": "Producción audiovisual",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "112",
+    "name": "Fotografía",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "113",
+    "name": "Dibujo técnico",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "114",
+    "name": "Pintura artística",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "115",
+    "name": "Escultura",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "116",
+    "name": "Diseño de modas",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "117",
+    "name": "Diseño industrial",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "118",
+    "name": "Diseño web",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "119",
+    "name": "Branding",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "120",
+    "name": "Tipografía",
+    "category": "Arte y diseño"
+  },
+  {
+    "id": "121",
+    "name": "Albañilería",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "122",
+    "name": "Carpintería",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "123",
+    "name": "Soldadura",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "124",
+    "name": "Electricidad industrial",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "125",
+    "name": "Mecánica automotriz",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "126",
+    "name": "Refrigeración",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "127",
+    "name": "Plomería",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "128",
+    "name": "Topografía",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "129",
+    "name": "Control de calidad industrial",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "130",
+    "name": "Producción en línea",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "131",
+    "name": "Robótica",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "132",
+    "name": "Electrónica básica",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "133",
+    "name": "Mantenimiento preventivo",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "134",
+    "name": "Hidráulica",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "135",
+    "name": "Neumática",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "136",
+    "name": "Interpretación de planos",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "137",
+    "name": "Instalaciones eléctricas",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "138",
+    "name": "Seguridad industrial",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "139",
+    "name": "Operación de maquinaria pesada",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "140",
+    "name": "Construcción sostenible",
+    "category": "Construcción e industria"
+  },
+  {
+    "id": "141",
+    "name": "JavaScript",
+    "category": "Tecnología"
+  },
+  {
+    "id": "142",
+    "name": "Python",
+    "category": "Tecnología"
+  },
+  {
+    "id": "143",
+    "name": "Java",
+    "category": "Tecnología"
+  },
+  {
+    "id": "144",
+    "name": "C#",
+    "category": "Tecnología"
+  },
+  {
+    "id": "145",
+    "name": "C++",
+    "category": "Tecnología"
+  },
+  {
+    "id": "146",
+    "name": "SQL",
+    "category": "Tecnología"
+  },
+  {
+    "id": "147",
+    "name": "HTML",
+    "category": "Tecnología"
+  },
+  {
+    "id": "148",
+    "name": "CSS",
+    "category": "Tecnología"
+  },
+  {
+    "id": "149",
+    "name": "React",
+    "category": "Tecnología"
+  },
+  {
+    "id": "150",
+    "name": "Angular",
+    "category": "Tecnología"
+  },
+  {
+    "id": "151",
+    "name": "Vue.js",
+    "category": "Tecnología"
+  },
+  {
+    "id": "152",
+    "name": "Node.js",
+    "category": "Tecnología"
+  },
+  {
+    "id": "153",
+    "name": "PHP",
+    "category": "Tecnología"
+  },
+  {
+    "id": "154",
+    "name": "Ruby",
+    "category": "Tecnología"
+  },
+  {
+    "id": "155",
+    "name": "Go",
+    "category": "Tecnología"
+  },
+  {
+    "id": "156",
+    "name": "Kotlin",
+    "category": "Tecnología"
+  },
+  {
+    "id": "157",
+    "name": "Swift",
+    "category": "Tecnología"
+  },
+  {
+    "id": "158",
+    "name": "Flutter",
+    "category": "Tecnología"
+  },
+  {
+    "id": "159",
+    "name": "Django",
+    "category": "Tecnología"
+  },
+  {
+    "id": "160",
+    "name": "Spring Boot",
+    "category": "Tecnología"
+  },
+  {
+    "id": "161",
+    "name": "TensorFlow",
+    "category": "Tecnología"
+  },
+  {
+    "id": "162",
+    "name": "PyTorch",
+    "category": "Tecnología"
+  },
+  {
+    "id": "163",
+    "name": "Machine Learning",
+    "category": "Tecnología"
+  },
+  {
+    "id": "164",
+    "name": "Data Science",
+    "category": "Tecnología"
+  },
+  {
+    "id": "165",
+    "name": "Big Data",
+    "category": "Tecnología"
+  },
+  {
+    "id": "166",
+    "name": "NoSQL",
+    "category": "Tecnología"
+  },
+  {
+    "id": "167",
+    "name": "MongoDB",
+    "category": "Tecnología"
+  },
+  {
+    "id": "168",
+    "name": "PostgreSQL",
+    "category": "Tecnología"
+  },
+  {
+    "id": "169",
+    "name": "MySQL",
+    "category": "Tecnología"
+  },
+  {
+    "id": "170",
+    "name": "Docker",
+    "category": "Tecnología"
+  },
+  {
+    "id": "171",
+    "name": "Kubernetes",
+    "category": "Tecnología"
+  },
+  {
+    "id": "172",
+    "name": "Cloud Computing",
+    "category": "Tecnología"
+  },
+  {
+    "id": "173",
+    "name": "AWS",
+    "category": "Tecnología"
+  },
+  {
+    "id": "174",
+    "name": "Azure",
+    "category": "Tecnología"
+  },
+  {
+    "id": "175",
+    "name": "Google Cloud",
+    "category": "Tecnología"
+  },
+  {
+    "id": "176",
+    "name": "Linux",
+    "category": "Tecnología"
+  },
+  {
+    "id": "177",
+    "name": "Windows Server",
+    "category": "Tecnología"
+  },
+  {
+    "id": "178",
+    "name": "Networking",
+    "category": "Tecnología"
+  },
+  {
+    "id": "179",
+    "name": "Cybersecurity",
+    "category": "Tecnología"
+  },
+  {
+    "id": "180",
+    "name": "DevOps",
+    "category": "Tecnología"
+  },
+  {
+    "id": "181",
+    "name": "Gestión de proyectos",
+    "category": "Administración"
+  },
+  {
+    "id": "182",
+    "name": "Planificación estratégica",
+    "category": "Administración"
+  },
+  {
+    "id": "183",
+    "name": "Control de inventarios",
+    "category": "Administración"
+  },
+  {
+    "id": "184",
+    "name": "Gestión de calidad",
+    "category": "Administración"
+  },
+  {
+    "id": "185",
+    "name": "Administración financiera",
+    "category": "Administración"
+  },
+  {
+    "id": "186",
+    "name": "Gestión de recursos humanos",
+    "category": "Administración"
+  },
+  {
+    "id": "187",
+    "name": "Negociación",
+    "category": "Administración"
+  },
+  {
+    "id": "188",
+    "name": "Liderazgo",
+    "category": "Administración"
+  },
+  {
+    "id": "189",
+    "name": "Gestión del tiempo",
+    "category": "Administración"
+  },
+  {
+    "id": "190",
+    "name": "Resolución de conflictos",
+    "category": "Administración"
+  },
+  {
+    "id": "191",
+    "name": "Gestión de riesgos",
+    "category": "Administración"
+  },
+  {
+    "id": "192",
+    "name": "Planificación de presupuestos",
+    "category": "Administración"
+  },
+  {
+    "id": "193",
+    "name": "Gestión de operaciones",
+    "category": "Administración"
+  },
+  {
+    "id": "194",
+    "name": "Trabajo en equipo",
+    "category": "Administración"
+  },
+  {
+    "id": "195",
+    "name": "Comunicación organizacional",
+    "category": "Administración"
+  },
+  {
+    "id": "196",
+    "name": "Atención al cliente",
+    "category": "Administración"
+  },
+  {
+    "id": "197",
+    "name": "Gestión documental",
+    "category": "Administración"
+  },
+  {
+    "id": "198",
+    "name": "Gestión de compras",
+    "category": "Administración"
+  },
+  {
+    "id": "199",
+    "name": "Gestión de contratos",
+    "category": "Administración"
+  },
+  {
+    "id": "200",
+    "name": "Gestión de ventas",
+    "category": "Administración"
+  },
+  {
+        "id": "101",
+        "name": "Comunicación efectiva",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "102",
+        "name": "Trabajo en equipo",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "103",
+        "name": "Liderazgo",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "104",
+        "name": "Empatía",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "105",
+        "name": "Resolución de conflictos",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "106",
+        "name": "Escucha activa",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "107",
+        "name": "Pensamiento crítico",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "108",
+        "name": "Adaptabilidad",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "109",
+        "name": "Gestión del tiempo",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "110",
+        "name": "Creatividad",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "111",
+        "name": "Negociación",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "112",
+        "name": "Toma de decisiones",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "113",
+        "name": "Resiliencia",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "114",
+        "name": "Motivación",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "115",
+        "name": "Pensamiento innovador",
+        "category": "Habilidades blandas"
+    },
+    {
+        "id": "201",
+        "name": "Gestión de proyectos",
+        "category": "Gestión"
+    },
+    {
+        "id": "202",
+        "name": "Planificación estratégica",
+        "category": "Gestión"
+    },
+    {
+        "id": "203",
+        "name": "Gestión de riesgos",
+        "category": "Gestión"
+    },
+    {
+        "id": "204",
+        "name": "Gestión financiera",
+        "category": "Gestión"
+    },
+    {
+        "id": "205",
+        "name": "Gestión de recursos humanos",
+        "category": "Gestión"
+    },
+    {
+        "id": "206",
+        "name": "Control de calidad",
+        "category": "Gestión"
+    },
+    {
+        "id": "207",
+        "name": "Gestión de operaciones",
+        "category": "Gestión"
+    },
+    {
+        "id": "208",
+        "name": "Gestión de compras",
+        "category": "Gestión"
+    },
+    {
+        "id": "209",
+        "name": "Gestión de contratos",
+        "category": "Gestión"
+    },
+    {
+        "id": "210",
+        "name": "Gestión de ventas",
+        "category": "Gestión"
+    },
+    {
+        "id": "211",
+        "name": "Gestión del cambio",
+        "category": "Gestión"
+    },
+    {
+        "id": "212",
+        "name": "Gestión de la innovación",
+        "category": "Gestión"
+    },
+    {
+        "id": "213",
+        "name": "Gestión de stakeholders",
+        "category": "Gestión"
+    },
+    {
+        "id": "214",
+        "name": "Gestión documental",
+        "category": "Gestión"
+    },
+    {
+        "id": "215",
+        "name": "Planificación de presupuestos",
+        "category": "Gestión"
+    }
+]

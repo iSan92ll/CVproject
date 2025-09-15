@@ -5,7 +5,7 @@ function validarFormulario() {
 
     // Validar campos obligatorios
     const camposObligatorios = [
-        'nombre', 'email', 'telefono', 'genero', 'fechanac', 
+        'nombre', 'emailPrincipal', 'telefono', 'genero', 'fechanac', 
         'tipoiden', 'numeroiden', 'ciudad', 'direccion',
         'ocupacion', 'puesto', 'objetivo', 'sobremi'
     ];
@@ -43,11 +43,11 @@ function validarFormulario() {
     }
 
     // Validar habilidades
-    const habilidadesSelect = document.getElementById('habilidades-select');
-    const habilidadesSeleccionadas = Array.from(habilidadesSelect.selectedOptions);
-    if (habilidadesSeleccionadas.length === 0) {
-        mostrarErrorCampo(habilidadesSelect, 'Seleccione al menos una habilidad');
-        valido = false;
+    const isHabilidadesValid = validateHabilidades();
+    if (!isHabilidadesValid) {
+        isValid = false;
+        // Desplazar a la sección de habilidades
+        document.getElementById('skillsInfo').scrollIntoView({ behavior: 'smooth' });
     }
 
     // Validar idiomas
@@ -115,15 +115,16 @@ function validarEstudios() {
     return valido;
 }
 
+// Validar email formularios dinámicos
 function validarEmail(campo) {
-    if (!campo) campo = document.getElementById('email');
     const valor = campo.value.trim();
     const emailRegex = /^[a-zA-Z0-9._%+-]{3,}@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}(\.com|\.co|\.gov\.co|\.gov\.com|\.org|\.edu\.co|\.net|\.info)$/i;
+    const emailRegex2 = /^[a-zA-Z0-9._%+-]{3,}@[a-zA-Z]{2,}(\.com|\.co|\.gov\.co|\.gov\.com|\.org|\.edu\.co|\.net|\.info)$/i;
     if (!valor) {
         mostrarErrorCampo(campo, 'El email no puede estar vacío');
         return false;
     }
-    if (!emailRegex.test(valor)) {
+    if (!emailRegex.test(valor) && !emailRegex2.test(valor)) {
         mostrarErrorCampo(campo, 'El correo debe tener un formato válido.');
         return false;
     }
